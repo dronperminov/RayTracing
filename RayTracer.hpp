@@ -164,8 +164,8 @@ Vec RayTracer::CastRay(const Ray &ray, double tmin, double tmax, int depth) {
 	Vec point = ray.GetPoint(t); // находим точку перемесения луча с объектом
 	Vec normal = primitive->GetNormal(point); // получаем нормаль в этой точке
 	Vec direction = ray.GetDirection();
-	Vec color = primitive->GetColor(point); // получаем цвет объекта в точке
-	Material material = primitive->GetMaterial(); // получаем материал ближайшего объекта
+	Material material = primitive->GetMaterial(point); // получаем материал ближайшего объекта
+	Vec color = material.color; // получаем цвет объекта в точке
 
 	Vec rayColor = Shading(point, direction, normal, color, material);
 

@@ -15,7 +15,7 @@ public:
 
 	double Intersect(const Ray &ray); // пересечение с лучём
 	Vec GetNormal(const Vec &point); // получение нормали
-	Vec GetColor(const Vec& point); // получение цвета в точке
+	Material GetMaterial(const Vec& point); // получение цвета в точке
 };
 
 // конструктор из потока
@@ -60,7 +60,7 @@ Vec ChessFlatness::GetNormal(const Vec &point) {
 }
 
 // получение цвета в точке
-Vec ChessFlatness::GetColor(const Vec& point) {
+Material ChessFlatness::GetMaterial(const Vec& point) {
 	Vec delta = point - center;
 
 	double ax = asin(normal.GetX());
@@ -77,9 +77,9 @@ Vec ChessFlatness::GetColor(const Vec& point) {
 	int dz = (fmod(fabs(z), cellSize.GetZ()) < cellSize.GetZ() / 2) ^ (z < 0);
 
 	if (dx ^ dz)
-		return material.color;
+		return material;
 
-	return material2.color;
+	return material2;
 }
 
 #endif

@@ -41,7 +41,7 @@ public:
 
 	double Intersect(const Ray &ray); // поиск пересечения
     Vec GetNormal(const Vec &point); // нормаль
-    Vec GetColor(const Vec &point); // нормаль
+    Material GetMaterial(const Vec &point); // нормаль
 };
 
 // проверка строки на комментарий
@@ -183,8 +183,8 @@ Vec ObjModel::GetNormal(const Vec &point) {
 	return box->GetNormal(point);
 }
 
-Vec ObjModel::GetColor(const Vec &point) {	
-	return box->GetColor(point);
+Material ObjModel::GetMaterial(const Vec &point) {
+	return box->GetMaterial(point);
 }
 
 #endif

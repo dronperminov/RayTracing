@@ -14,7 +14,7 @@ public:
     
     double Intersect(const Ray &ray); // поиск пересечения
     Vec GetNormal(const Vec &point); // нормаль
-    Vec GetColor(const Vec &point); // получение цвета в точке
+    Material GetMaterial(const Vec &point); // получение цвета в точке
 
     void AddPrimitive(Primitive *primitive); // добавление примитива
     void AddBox(BoundingBox *box);
@@ -90,8 +90,8 @@ Vec BoundingBox::GetNormal(const Vec &point) {
 }
 
 // получение цвета в точке
-Vec BoundingBox::GetColor(const Vec &point) {
-	return nearest->GetColor(point);
+Material BoundingBox::GetMaterial(const Vec &point) {
+	return nearest->GetMaterial(point);
 }
 
 // добавление примитива
