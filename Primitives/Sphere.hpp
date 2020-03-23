@@ -12,7 +12,7 @@ public:
 	Sphere(Vec center, double radius, Material material);
 	Sphere(std::istream& is, Material material); // создание из потока
 	
-	double Intersect(const Ray &ray); // пересечение с лучём
+	Primitive* Intersect(const Ray &ray, double &t); // пересечение с лучём
 	Vec GetNormal(const Vec &point); // получение нормали в точке
 	void UpdateBbox(Vec& min, Vec &max); // обновление ограничивающего объёма
 };
@@ -30,18 +30,21 @@ Sphere::Sphere(std::istream& is, Material material) {
 }
 
 // пересечение сферы с лучём
-double Sphere::Intersect(const Ray &ray) {
+Primitive* Sphere::Intersect(const Ray &ray, double &t) {
 	Vec oc = ray.GetOrigin() - center;
 
 	double k = -oc.Dot(ray.GetDirection());
 	double d = k * k - oc.Dot(oc) + radius * radius;
 
-	if (d < EPSILON)
-		return INF; // пересечения нет
+	if (d < EPSILON) {
+        t = INF;
+        return nullptr;
+    }
 
 	d = sqrt(d);
 
-	return MinThreshold(k - d, k + d, EPSILON);
+	t = MinThreshold(k - d, k + d, EPSILON);
+	return this;
 }
 
 // получение нормали в точке

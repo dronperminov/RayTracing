@@ -8,11 +8,10 @@ class BoundingBox : public Primitive {
 	std::vector<Primitive *> primitives;
 	Vec min;
 	Vec max;
-	Primitive *nearest;
 public:
 	BoundingBox();
     
-    double Intersect(const Ray &ray); // поиск пересечения
+    Primitive* Intersect(const Ray &ray, double &t); // поиск пересечения
     Vec GetNormal(const Vec &point); // нормаль
     Material GetMaterial(const Vec &point); // получение цвета в точке
 
@@ -23,11 +22,10 @@ public:
 BoundingBox::BoundingBox() {
 	min = Vec(INF, INF, INF);
 	max = Vec(-INF, -INF, -INF);
-	nearest = nullptr;
 }
 
 // поиск пересечения
-double BoundingBox::Intersect(const Ray &ray) {
+Primitive* BoundingBox::Intersect(const Ray &ray, double &t) {
     double dx = ray.GetInvDirection().GetX();
     double dy = ray.GetInvDirection().GetY();
     double dz = ray.GetInvDirection().GetZ();
@@ -44,8 +42,10 @@ double BoundingBox::Intersect(const Ray &ray) {
     if (tymin > tymax)
     	std::swap(tymin, tymax); 
  
-    if ((tmin > tymax) || (tymin > tmax)) 
-        return INF; 
+    if ((tmin > tymax) || (tymin > tmax)) {
+        t = INF;
+        return nullptr;
+    }
  
     if (tymin > tmin) 
         tmin = tymin; 
@@ -59,8 +59,10 @@ double BoundingBox::Intersect(const Ray &ray) {
     if (tzmin > tzmax) 
     	std::swap(tzmin, tzmax); 
  
-    if ((tmin > tzmax) || (tzmin > tmax)) 
-        return INF; 
+    if ((tmin > tzmax) || (tzmin > tmax)) {
+        t = INF;
+        return nullptr;
+    }
  
     if (tzmin > tmin) 
         tmin = tzmin; 
@@ -69,29 +71,32 @@ double BoundingBox::Intersect(const Ray &ray) {
         tmax = tzmax;
 
 
-    double t = INF;
- 	nearest = nullptr;
+    t = INF;
+ 	Primitive *nearest = nullptr;
 
  	for (size_t i = 0; i < primitives.size(); i++) {
-		double ti = primitives[i]->Intersect(ray);
+		double ti;
+        Primitive *pi = primitives[i]->Intersect(ray, ti);
 
-		if (ti < t) {
+		if (pi && ti < t) {
 			t = ti; // обновляем ближайшее расстоние
-			nearest = primitives[i];
+			nearest = pi;
 		}
 	}
     
-    return t;
+    return nearest;
 }
 
 // нормаль
 Vec BoundingBox::GetNormal(const Vec &point) {
-	return nearest->GetNormal(point);
+	// return nearest->GetNormal(point);
+    throw "";
 }
 
 // получение цвета в точке
 Material BoundingBox::GetMaterial(const Vec &point) {
-	return nearest->GetMaterial(point);
+	// return nearest->GetMaterial(point);
+    throw "";
 }
 
 // добавление примитива

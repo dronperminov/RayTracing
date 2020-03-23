@@ -53,11 +53,12 @@ Primitive* RayTracer::FindIntersection(const Ray &ray, double tmin, double tmax,
 
 	// проходимся по всем фигурам
 	for (size_t i = 0; i < primitives.size(); i++) {
-		double ti = primitives[i]->Intersect(ray);
+		double ti;
+		Primitive *pi = primitives[i]->Intersect(ray, ti);
 
-		if (ti >= tmin && ti < tmax && ti < t) {
+		if (pi && ti >= tmin && ti < tmax && ti < t) {
 			t = ti; // обновляем ближайшее расстоние
-			primitive = primitives[i]; // и запоминаем ближайший примитив
+			primitive = pi; // и запоминаем ближайший примитив
 		}
 	}
 
@@ -67,9 +68,10 @@ Primitive* RayTracer::FindIntersection(const Ray &ray, double tmin, double tmax,
 // проверка наличия пересечения луча
 bool RayTracer::HaveIntersection(const Ray &ray, double tmin, double tmax) {
 	for (size_t i = 0; i < primitives.size(); i++) {
-		double ti = primitives[i]->Intersect(ray);
+		double ti;
+		Primitive *pi = primitives[i]->Intersect(ray, ti);
 
-		if (ti >= tmin && ti < tmax)
+		if (pi && ti >= tmin && ti < tmax)
 			return true;
 	}
 

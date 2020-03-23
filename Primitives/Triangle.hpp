@@ -13,7 +13,7 @@ public:
     Triangle(const Vec& v1, const Vec& v2, const Vec& v3, Material material);
     Triangle(std::istream& is, Material material); // создание из потока
     
-    double Intersect(const Ray &ray); // пересечение с лучём
+    Primitive* Intersect(const Ray &ray, double &t); // пересечение с лучём
     Vec GetNormal(const Vec &point); // получение нормали
     void UpdateBbox(Vec& min, Vec &max); // обновление ограничивающего объёма
 };
@@ -39,32 +39,40 @@ Triangle::Triangle(std::istream& is, Material material) {
 }
 
 // пересечение с лучём
-double Triangle::Intersect(const Ray &ray) {
+Primitive* Triangle::Intersect(const Ray &ray, double &t) {
     Vec h = ray.GetDirection().Cross(v13);
     double a = v12.Dot(h);
 
-    if (fabs(a) < EPSILON)
-        return INF;
+    if (fabs(a) < EPSILON) {
+        t = INF;
+        return nullptr;
+    }
 
     double f = 1.0/a;
     Vec s = ray.GetOrigin() - v1;
     double u = f * s.Dot(h);
 
-    if (u < 0.0 || u > 1.0)
-        return INF;
+    if (u < 0.0 || u > 1.0) {
+        t = INF;
+        return nullptr;
+    }
 
     Vec q = s.Cross(v12);
     double v = f * ray.GetDirection().Dot(q);
 
-    if (v < 0.0 || u + v > 1.0)
-        return INF;
+    if (v < 0.0 || u + v > 1.0) {
+        t = INF;
+        return nullptr;
+    }
 
-    double t = f * v13.Dot(q);
+    t = f * v13.Dot(q);
 
-    if (t < EPSILON)
-        return INF;
+    if (t < EPSILON) {
+        t = INF;
+        return nullptr;
+    }
 
-    return t;
+    return this;
 }
 
 // получение нормали

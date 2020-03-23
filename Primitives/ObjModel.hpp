@@ -39,7 +39,7 @@ class ObjModel : public Primitive {
 public:
 	ObjModel(std::istream &is, const Material& material); // создание модельки из файла
 
-	double Intersect(const Ray &ray); // поиск пересечения
+	Primitive* Intersect(const Ray &ray, double &t); // поиск пересечения
     Vec GetNormal(const Vec &point); // нормаль
     Material GetMaterial(const Vec &point); // нормаль
 };
@@ -174,8 +174,8 @@ ObjModel::ObjModel(std::istream &is, const Material& material) {
 }
 
 // поиск пересечения
-double ObjModel::Intersect(const Ray &ray) {
-	return box->Intersect(ray);
+Primitive* ObjModel::Intersect(const Ray &ray, double &t) {
+	return box->Intersect(ray, t);
 }
    
 // нормаль

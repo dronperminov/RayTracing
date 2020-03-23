@@ -10,7 +10,7 @@ class Primitive {
 protected:
     Material material; // материал
 public:
-    virtual double Intersect(const Ray &ray) = 0; // поиск пересечения
+    virtual Primitive* Intersect(const Ray &ray, double &t) = 0; // поиск пересечения
     virtual Vec GetNormal(const Vec &point) = 0; // нормаль
     virtual Material GetMaterial(const Vec &point); // получение материала в точке
     virtual Vec GetColor(const Vec &point); // получение цвета в точке
