@@ -221,7 +221,9 @@ void RayTracer::ReadScene(const std::string& path) {
 			primitives.push_back(new Flatness(ss, materials[name]));
 		}
 		else if (type == "chessflatness") {
-			primitives.push_back(new ChessFlatness(ss, materials[name]));
+			std::string name2;
+			ss >> name2;
+			primitives.push_back(new ChessFlatness(ss, materials[name], materials[name2]));
 		}
 		else if (type == "disk") {
 			primitives.push_back(new Disk(ss, materials[name]));

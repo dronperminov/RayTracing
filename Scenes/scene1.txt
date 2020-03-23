@@ -3,6 +3,7 @@ material red_rubber 77 26 26 10 1 0.3 0.1 0.1 0
 material mirror 255 255 255 1425 1 0 10 0.8 0 0
 material glass 153 179 204 125 1.5 0 0.5 0.1 0.8
 material black 0 0 0 1000 1 0.3 0.5 0.8 0
+material white 255 255 255 1000 1 0.3 0.5 0.8 0
 
 background 16 0 0
 
@@ -11,7 +12,7 @@ sphere glass -1 -1.5 12 2
 sphere red_rubber 1.5 -0.5 18 3
 sphere mirror 7 5 18 4
 
-chessflatness black 0 1 0 0 -3 16 8 4
+chessflatness black white 0 1 0 0 -3 16 8 4
 
 # lights
 light point 1.4 -20 20 -20

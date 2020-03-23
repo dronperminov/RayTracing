@@ -9,8 +9,9 @@ class ChessFlatness : public Primitive {
 	Vec center; // центр
 	Vec size; // размер плоскости
 	Vec cellSize;
+	Material material2;
 public:
-	ChessFlatness(std::istream &is, Material material); // конструктор из потока
+	ChessFlatness(std::istream &is, Material material, Material material2); // конструктор из потока
 
 	double Intersect(const Ray &ray); // пересечение с лучём
 	Vec GetNormal(const Vec &point); // получение нормали
@@ -18,10 +19,11 @@ public:
 };
 
 // конструктор из потока
-ChessFlatness::ChessFlatness(std::istream &is, Material material) {
+ChessFlatness::ChessFlatness(std::istream &is, Material material, Material material2) {
 	double sz;
 	int cells;
 	this->material = material;
+	this->material2 = material2;
 	is >> normal >> center >> sz >> cells;
 
 	normal = normal.Normalized();
@@ -77,7 +79,7 @@ Vec ChessFlatness::GetColor(const Vec& point) {
 	if (dx ^ dz)
 		return material.color;
 
-	return Vec(255, 255, 255) - material.color;
+	return material2.color;
 }
 
 #endif

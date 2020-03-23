@@ -36,7 +36,7 @@ triangle red_rubber -6 0 8 -8 2 10 -6 0 12
 
 triangle gold 4 0 24 8 4 24 8 0 20
 
-chessflatness black 0 1 0 0 0 16 8 4
+chessflatness black white 0 1 0 0 0 16 8 4
 
 flatness yellow 0 0 -1 0 4 24 8
 flatness red_rubber -1 0 0 8 4 16 8
