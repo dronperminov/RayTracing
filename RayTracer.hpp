@@ -254,6 +254,7 @@ Picture RayTracer::CastRays(int width, int height, const Camera &camera, int max
 
 	Picture picture(width, height);
 
+	#pragma omp parallel for collapse(2)
 	for (int x = 0; x < width; x++) {
 		for (int y = 0; y < height; y++) {
 			double wx = x / size - 0.5;
