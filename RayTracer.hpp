@@ -18,6 +18,7 @@
 #include "Primitives/Flatness.hpp"
 #include "Primitives/ChessFlatness.hpp"
 #include "Primitives/Disk.hpp"
+#include "Primitives/Mandelbulb.hpp"
 #include "Primitives/ObjModel.hpp"
 #include "Primitives/BoundingBox.hpp"
 
@@ -250,6 +251,9 @@ void RayTracer::ReadScene(const std::string& path) {
 		}
 		else if (type == "disk") {
 			primitives.push_back(new Disk(ss, materials[name]));
+		}
+		else if (type == "mandelbulb") {
+			primitives.push_back(new Mandelbulb(ss, materials[name]));
 		}
 		else if (type == "model") {
 			primitives.push_back(new ObjModel(ss, materials[name]));
