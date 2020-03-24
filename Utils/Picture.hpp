@@ -14,6 +14,10 @@ class Picture {
 	std::vector<Pixel> pixels; // пиксели
 public:
 	Picture(int width, int height);
+	Picture(const std::string& filename);
+
+	int Width() const;
+	int Height() const;
 
 	Pixel& operator()(int x, int y);
 	void Save(const std::string &filename);
@@ -23,6 +27,46 @@ Picture::Picture(int width, int height) {
 	this->width = width;
 	this->height = height;
 	this->pixels.resize(width * height);
+}
+
+Picture::Picture(const std::string& filename) {
+	std::ifstream f(filename, std::ios::in | std::ios::binary);
+
+	if (!f)
+		throw std::runtime_error("unable to open bmp file");
+	
+	unsigned char bmpfileheader[14];
+	unsigned char bmpinfoheader[40];
+
+	f.read((char *) bmpfileheader, 14);
+	f.read((char *) bmpinfoheader, 40);
+
+	unsigned char w0 = bmpinfoheader[4];
+	unsigned char w1 = bmpinfoheader[5];
+	unsigned char w2 = bmpinfoheader[6];
+	unsigned char w3 = bmpinfoheader[7];
+
+	unsigned char h0 = bmpinfoheader[8];
+	unsigned char h1 = bmpinfoheader[9];
+	unsigned char h2 = bmpinfoheader[10];
+	unsigned char h3 = bmpinfoheader[11];
+
+	width = (w3 << 24) | (w2 << 16) | (w1 << 8) | w0;
+	height = (h3 << 24) | (h2 << 16) | (h1 << 8) | h0;
+	
+	int paddedsize = (width*height) * sizeof(Pixel);
+
+	pixels.resize(width * height);
+	f.read((char*)pixels.data(), paddedsize);
+	f.close();
+}
+
+int Picture::Width() const {
+	return width;
+}
+
+int Picture::Height() const {
+	return height;
 }
 
 Pixel& Picture::operator()(int x, int y) {

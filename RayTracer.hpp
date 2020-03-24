@@ -31,6 +31,7 @@ class RayTracer {
 	std::map<std::string, Material> materials; // материалы
 	std::vector<Light *> lights; // источники света
 	std::vector<Primitive *> primitives; // примитивы
+	Picture *envmap;
 
 	Primitive* FindIntersection(const Ray &ray, double tmin, double tmax, double &t); // поиск ближайшего к лучу примитива
 	bool HaveIntersection(const Ray &ray, double tmin, double tmax); // проверка наличия пересечения луча
@@ -160,8 +161,20 @@ Vec RayTracer::CastRay(const Ray &ray, double tmin, double tmax, int depth) {
 	Primitive *primitive = FindIntersection(ray, tmin, tmax, t); // находим ближайший объект, с которым пересекается луч
 
 	// если луч ни с чем не пересекается
-	if (primitive == nullptr)
-		return backgroundColor;
+	if (primitive == nullptr) {
+		if (envmap == nullptr)
+			return backgroundColor;
+
+		double ax = atan2(ray.GetDirection().GetZ(), ray.GetDirection().GetX()) / (2 * M_PI) + 0.5;
+		double ay = acos(ray.GetDirection().GetY()) / M_PI;
+
+		int x = std::max(0, std::min(envmap->Width() - 1, (int) (ax * envmap->Width())));
+		int y = std::max(0, std::min(envmap->Height() - 1, (int) (ay * envmap->Height())));
+
+		Pixel p = (*envmap)(x, y);
+
+		return Vec(p.b, p.g, p.r); // возвращаем цвет фона
+	}
 
 	Vec point = ray.GetPoint(t); // находим точку перемесения луча с объектом
 	Vec normal = primitive->GetNormal(point); // получаем нормаль в этой точке
@@ -189,6 +202,7 @@ void RayTracer::ReadScene(const std::string& path) {
 		return;
 	}
 
+	envmap = nullptr;
 	std::string line;
 	// считываем построчно сцену
 	while (std::getline(sceneFile, line)) {
@@ -201,6 +215,13 @@ void RayTracer::ReadScene(const std::string& path) {
 
 		if (type == "background") {
 			ss >> backgroundColor;
+			continue;
+		}
+
+		if (type == "envmap") {
+			std::string filepath;
+			ss >> filepath;
+			envmap = new Picture(filepath);
 			continue;
 		}
 
