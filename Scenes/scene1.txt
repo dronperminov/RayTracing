@@ -6,6 +6,7 @@ material black 0 0 0 1000 1 0.3 0.5 0.8 0
 material white 255 255 255 1000 1 0.3 0.5 0.8 0
 
 background 16 0 0
+envmap Envmaps/envmap1.bmp
 
 sphere ivory -3 0 16 2
 sphere glass -1 -1.5 12 2
