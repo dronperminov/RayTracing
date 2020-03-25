@@ -40,7 +40,7 @@ Triangle::Triangle(std::istream& is, Material material) {
 
 // пересечение с лучём
 Primitive* Triangle::Intersect(const Ray &ray, double &t) {
-    Vec h = ray.GetDirection().Cross(v13);
+    Vec h = ray.direction.Cross(v13);
     double a = v12.Dot(h);
 
     if (fabs(a) < EPSILON) {
@@ -49,7 +49,7 @@ Primitive* Triangle::Intersect(const Ray &ray, double &t) {
     }
 
     double f = 1.0/a;
-    Vec s = ray.GetOrigin() - v1;
+    Vec s = ray.origin - v1;
     double u = f * s.Dot(h);
 
     if (u < 0.0 || u > 1.0) {
@@ -58,7 +58,7 @@ Primitive* Triangle::Intersect(const Ray &ray, double &t) {
     }
 
     Vec q = s.Cross(v12);
-    double v = f * ray.GetDirection().Dot(q);
+    double v = f * ray.direction.Dot(q);
 
     if (v < 0.0 || u + v > 1.0) {
         t = INF;

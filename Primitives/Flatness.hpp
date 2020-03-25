@@ -34,14 +34,14 @@ Flatness::Flatness(std::istream &is, Material material) {
 
 // пересечение с лучём
 Primitive* Flatness::Intersect(const Ray &ray, double &t) {
-	double denom = ray.GetDirection().Dot(normal);
+	double denom = ray.direction.Dot(normal);
 
 	if (fabs(denom) < EPSILON){
         t = INF;
         return nullptr;
     }
 
-	t = (center - ray.GetOrigin()).Dot(normal) / denom; // пересечение с плоскостью
+	t = (center - ray.origin).Dot(normal) / denom; // пересечение с плоскостью
 	Vec point = ray.GetPoint(t); // находим точку на плоскости
 
 	Vec delta = point - center;

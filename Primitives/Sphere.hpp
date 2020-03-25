@@ -39,9 +39,9 @@ Sphere::Sphere(std::istream& is, Material material) {
 
 // пересечение сферы с лучём
 Primitive* Sphere::Intersect(const Ray &ray, double &t) {
-	Vec oc = ray.GetOrigin() - center;
+	Vec oc = ray.origin - center;
 
-	double k = -oc.Dot(ray.GetDirection());
+	double k = -oc.Dot(ray.direction);
 	double d = k * k - oc.Dot(oc) + radius * radius;
 
 	if (d < EPSILON) {

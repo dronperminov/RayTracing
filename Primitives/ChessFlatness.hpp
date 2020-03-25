@@ -38,14 +38,14 @@ ChessFlatness::ChessFlatness(std::istream &is, Material material, Material mater
 
 // пересечение с лучём
 Primitive* ChessFlatness::Intersect(const Ray &ray, double &t) {
-	double denom = ray.GetDirection().Dot(normal);
+	double denom = ray.direction.Dot(normal);
 
 	if (fabs(denom) < EPSILON){
         t = INF;
         return nullptr;
     }
 
-	t = (center - ray.GetOrigin()).Dot(normal) / denom; // пересечение с плоскостью
+	t = (center - ray.origin).Dot(normal) / denom; // пересечение с плоскостью
 	Vec point = ray.GetPoint(t); // находим точку на плоскости
 
 	Vec delta = point - center;

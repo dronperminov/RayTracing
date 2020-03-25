@@ -4,17 +4,14 @@
 #include <iostream>
 #include "Vec.hpp"
 
-class Ray {
+struct Ray {
 	Vec origin; // начало луча
 	Vec direction; // направление луча
 	Vec invDirection;
-public:
+
 	Ray(const Vec& origin, const Vec& direction);
 
 	Vec GetPoint(double t) const; // получение точки
-	Vec GetOrigin() const; // получение начала луча
-	Vec GetDirection() const; // получение направления луча
-	Vec GetInvDirection() const; // получение направления луча
 };
 
 Ray::Ray(const Vec& origin, const Vec& direction) {
@@ -27,21 +24,6 @@ Ray::Ray(const Vec& origin, const Vec& direction) {
 // получение точки
 Vec Ray::GetPoint(double t) const {
 	return origin + direction * t;
-}
-
-// получение начала луча
-Vec Ray::GetOrigin() const {
-	return origin;
-}
-
-// получение направления луча
-Vec Ray::GetDirection() const {
-	return direction;
-}
-
-// получение направления луча
-Vec Ray::GetInvDirection() const {
-	return invDirection;
 }
 
 // получение наименьшего числа, большего threshold

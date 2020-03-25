@@ -166,8 +166,8 @@ Vec RayTracer::CastRay(const Ray &ray, double tmin, double tmax, int depth) {
 		if (envmap == nullptr)
 			return backgroundColor;
 
-		double ax = atan2(ray.GetDirection().z, ray.GetDirection().x) / (2 * M_PI) + 0.5;
-		double ay = acos(ray.GetDirection().y) / M_PI;
+		double ax = atan2(ray.direction.z, ray.direction.x) / (2 * M_PI) + 0.5;
+		double ay = acos(ray.direction.y) / M_PI;
 
 		int x = std::max(0, std::min(envmap->Width() - 1, (int) (ax * envmap->Width())));
 		int y = std::max(0, std::min(envmap->Height() - 1, (int) (ay * envmap->Height())));
@@ -177,7 +177,7 @@ Vec RayTracer::CastRay(const Ray &ray, double tmin, double tmax, int depth) {
 
 	Vec point = ray.GetPoint(t); // находим точку перемесения луча с объектом
 	Vec normal = primitive->GetNormal(point); // получаем нормаль в этой точке
-	Vec direction = ray.GetDirection();
+	Vec direction = ray.direction;
 	Material material = primitive->GetMaterial(point); // получаем материал ближайшего объекта
 	Vec color = primitive->GetColor(point); // получаем цвет объекта в точке
 

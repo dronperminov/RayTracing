@@ -26,14 +26,14 @@ Disk::Disk(std::istream &is, Material material) {
 
 // пересечение с лучём
 Primitive* Disk::Intersect(const Ray &ray, double &t) {
-	double denom = ray.GetDirection().Dot(normal);
+	double denom = ray.direction.Dot(normal);
 
 	if (fabs(denom) < EPSILON) {
         t = INF;
         return nullptr;
     }
 
-	t = (center - ray.GetOrigin()).Dot(normal) / denom;
+	t = (center - ray.origin).Dot(normal) / denom;
 	Vec point = ray.GetPoint(t);
 
 	if ((point - center).Norm() > radius) {

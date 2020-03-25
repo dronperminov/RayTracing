@@ -26,18 +26,18 @@ BoundingBox::BoundingBox() {
 
 // поиск пересечения
 Primitive* BoundingBox::Intersect(const Ray &ray, double &t) {
-    double dx = ray.GetInvDirection().x;
-    double dy = ray.GetInvDirection().y;
-    double dz = ray.GetInvDirection().z;
+    double dx = ray.invDirection.x;
+    double dy = ray.invDirection.y;
+    double dz = ray.invDirection.z;
 
-    double tmin = (min.x - ray.GetOrigin().x) * dx;
-    double tmax = (max.x - ray.GetOrigin().x) * dx;
+    double tmin = (min.x - ray.origin.x) * dx;
+    double tmax = (max.x - ray.origin.x) * dx;
  
     if (tmin > tmax)
         std::swap(tmin, tmax); 
  
-    double tymin = (min.y - ray.GetOrigin().y) * dy;
-    double tymax = (max.y - ray.GetOrigin().y) * dy;
+    double tymin = (min.y - ray.origin.y) * dy;
+    double tymax = (max.y - ray.origin.y) * dy;
 
     if (tymin > tymax)
         std::swap(tymin, tymax); 
@@ -53,8 +53,8 @@ Primitive* BoundingBox::Intersect(const Ray &ray, double &t) {
     if (tymax < tmax) 
         tmax = tymax; 
 
-    double tzmin = (min.z - ray.GetOrigin().z) * dz;
-    double tzmax = (max.z - ray.GetOrigin().z) * dz;
+    double tzmin = (min.z - ray.origin.z) * dz;
+    double tzmax = (max.z - ray.origin.z) * dz;
  
     if (tzmin > tzmax) 
         std::swap(tzmin, tzmax); 
