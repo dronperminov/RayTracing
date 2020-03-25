@@ -19,6 +19,7 @@
 #include "Primitives/ChessFlatness.hpp"
 #include "Primitives/Disk.hpp"
 #include "Primitives/Mandelbulb.hpp"
+#include "Primitives/Torus.hpp"
 #include "Primitives/ObjModel.hpp"
 #include "Primitives/BoundingBox.hpp"
 
@@ -214,6 +215,7 @@ void RayTracer::ReadScene(const std::string& path) {
 
         if (type == "background") {
             ss >> backgroundColor;
+            backgroundColor = backgroundColor / 255;
             continue;
         }
 
@@ -255,6 +257,9 @@ void RayTracer::ReadScene(const std::string& path) {
         }
         else if (type == "mandelbulb") {
             primitives.push_back(new Mandelbulb(ss, materials[name]));
+        }
+        else if (type == "torus") {
+            primitives.push_back(new Torus(ss, materials[name]));
         }
         else if (type == "model") {
             primitives.push_back(new ObjModel(ss, materials[name]));
