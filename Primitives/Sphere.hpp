@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "Primitive.hpp"
+#include "../Utils/Picture.hpp"
 
 class Sphere : public Primitive {
 	Vec center; // центр
@@ -15,6 +16,13 @@ public:
 	Primitive* Intersect(const Ray &ray, double &t); // пересечение с лучём
 	Vec GetNormal(const Vec &point); // получение нормали в точке
 	void UpdateBbox(Vec& min, Vec &max); // обновление ограничивающего объёма
+};
+
+class TexturedSphere : public Sphere {
+	Picture texture;
+public:
+	TexturedSphere(std::istream& is, Material material); // создание из потока
+	Vec GetColor(const Vec &point);
 };
 
 Sphere::Sphere(Vec center, double radius, Material material) {
@@ -56,6 +64,24 @@ Vec Sphere::GetNormal(const Vec &point) {
 void Sphere::UpdateBbox(Vec& min, Vec &max) {
 	min = min.Min(center - Vec(radius, radius, radius));
 	max = max.Max(center + Vec(radius, radius, radius));
+}
+
+// создание из потока
+TexturedSphere::TexturedSphere(std::istream& is, Material material) : Sphere(is, material), texture(is) {
+
+}
+
+Vec TexturedSphere::GetColor(const Vec &point) {
+	Vec normal = GetNormal(point);
+	double ax = atan2(normal.GetZ(), normal.GetX()) / (2 * M_PI) + 0.5;
+	double ay = acos(normal.GetY()) / M_PI;
+
+	int x = std::max(0, std::min(texture.Width() - 1, (int) (ax * texture.Width())));
+	int y = std::max(0, std::min(texture.Height() - 1, (int) (ay * texture.Height())));
+
+	Pixel p = texture(x, y);
+
+	return Vec(p.b, p.g, p.r); // возвращаем цвет фона
 }
 
 #endif

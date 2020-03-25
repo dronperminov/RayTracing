@@ -235,6 +235,9 @@ void RayTracer::ReadScene(const std::string& path) {
 		else if (type == "sphere") {
 			primitives.push_back(new Sphere(ss, materials[name]));
 		}
+		else if (type == "textured_sphere") {
+			primitives.push_back(new TexturedSphere(ss, materials[name]));
+		}
 		else if (type == "triangle") {
 			primitives.push_back(new Triangle(ss, materials[name]));
 		}

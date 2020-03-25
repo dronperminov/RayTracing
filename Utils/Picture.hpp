@@ -12,9 +12,12 @@ class Picture {
 	int width;
 	int height;
 	std::vector<Pixel> pixels; // пиксели
+
+	void Read(const std::string& filename);
 public:
 	Picture(int width, int height);
 	Picture(const std::string& filename);
+	Picture(std::istream &is);
 
 	int Width() const;
 	int Height() const;
@@ -30,6 +33,28 @@ Picture::Picture(int width, int height) {
 }
 
 Picture::Picture(const std::string& filename) {
+	Read(filename);
+}
+
+Picture::Picture(std::istream &is) {
+	std::string filename;
+	is >> filename;
+	Read(filename);
+}
+
+int Picture::Width() const {
+	return width;
+}
+
+int Picture::Height() const {
+	return height;
+}
+
+Pixel& Picture::operator()(int x, int y) {
+	return pixels[(height - 1 - y) * width + x];
+}
+
+void Picture::Read(const std::string& filename) {
 	std::ifstream f(filename, std::ios::in | std::ios::binary);
 
 	if (!f)
@@ -59,18 +84,6 @@ Picture::Picture(const std::string& filename) {
 	pixels.resize(width * height);
 	f.read((char*)pixels.data(), paddedsize);
 	f.close();
-}
-
-int Picture::Width() const {
-	return width;
-}
-
-int Picture::Height() const {
-	return height;
-}
-
-Pixel& Picture::operator()(int x, int y) {
-	return pixels[(height - 1 - y) * width + x];
 }
 
 void Picture::Save(const std::string &filename) {
