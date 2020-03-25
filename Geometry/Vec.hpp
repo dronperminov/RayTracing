@@ -5,11 +5,11 @@
 #include <cmath>
 #include "Constants.hpp"
 
-class Vec {
+struct Vec {
 	double x;
 	double y;
 	double z;
-public:
+
 	Vec(); // нулевой вектор
 	Vec(double x, double y, double z); // вектор из координат
 	Vec(std::istream &is); // вектор из потока
@@ -34,11 +34,6 @@ public:
 	Vec operator*(const Vec& vec) const; // покоординатное умножение
 	Vec operator*(double a) const; // умножение на число
 	Vec operator/(double a) const; // деление на число
-
-	void Clamp(double min, double max); // обрезка значение по интервалу [min, max]
-	double GetX() const;
-	double GetY() const;
-	double GetZ() const;
 
 	friend std::istream& operator>>(std::istream& is, Vec& vec);
 	friend std::ostream& operator<<(std::ostream& os, const Vec& vec);
@@ -146,25 +141,6 @@ Vec Vec::operator*(double a) const {
 // деление на число
 Vec Vec::operator/(double a) const {
 	return Vec(x / a, y / a, z / a);
-}
-
-// обрезка значение по интервалу [min, max]
-void Vec::Clamp(double min, double max) {
-	x = std::max(min, std::min(max, x));
-	y = std::max(min, std::min(max, y));
-	z = std::max(min, std::min(max, z));
-}
-
-double Vec::GetX() const {
-	return x;
-}
-
-double Vec::GetY() const {
-	return y;
-}
-
-double Vec::GetZ() const {
-	return z;
 }
 
 std::istream& operator>>(std::istream& is, Vec& vec) {

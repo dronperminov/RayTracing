@@ -29,8 +29,8 @@ public:
 			if (r > radius)
 				break;
 			
-			double theta = acos(z.GetZ() / r);
-			double phi = atan2(z.GetY(), z.GetX());
+			double theta = acos(z.z / r);
+			double phi = atan2(z.y, z.x);
 			dr = pow(r, power - 1.0) * power * dr + 1.0;
 			
 			double zr = pow(r, power);
@@ -70,9 +70,9 @@ Primitive* Mandelbulb::Intersect(const Ray &ray, double &t) {
 // получение нормали
 Vec Mandelbulb::GetNormal(const Vec &point) {
 	double EPS = 0.01;
-	double x = point.GetX();
-	double y = point.GetY();
-	double z = point.GetZ();
+	double x = point.x;
+	double y = point.y;
+	double z = point.z;
 
 	double dx = DE(Vec(x + EPS, y, z)) - DE(Vec(x - EPS, y, z));
 	double dy = DE(Vec(x, y + EPS, z)) - DE(Vec(x, y - EPS, z));

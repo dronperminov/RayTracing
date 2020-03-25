@@ -23,17 +23,17 @@ Camera::Camera(const Vec &position, const Vec &rotation) {
 }
 
 void Camera::InitMatrix(const Vec &rotation) {
-	R[0][0] = cos(rotation.GetY());
-	R[0][1] = cos(rotation.GetX()) * sin(rotation.GetY());
-	R[0][2] = sin(rotation.GetX()) * sin(rotation.GetY());
+	R[0][0] = cos(rotation.y);
+	R[0][1] = cos(rotation.x) * sin(rotation.y);
+	R[0][2] = sin(rotation.x) * sin(rotation.y);
 
 	R[1][0] = 0;
-	R[1][1] = sin(rotation.GetX());
-	R[1][2] = -cos(rotation.GetX());
+	R[1][1] = sin(rotation.x);
+	R[1][2] = -cos(rotation.x);
 
-	R[2][0] = -sin(rotation.GetY());
-	R[2][1] = cos(rotation.GetX()) * cos(rotation.GetY());
-	R[2][2] = sin(rotation.GetX()) * cos(rotation.GetY());
+	R[2][0] = -sin(rotation.y);
+	R[2][1] = cos(rotation.x) * cos(rotation.y);
+	R[2][2] = sin(rotation.x) * cos(rotation.y);
 }
 
 // задание положения камеры

@@ -166,8 +166,8 @@ Vec RayTracer::CastRay(const Ray &ray, double tmin, double tmax, int depth) {
 		if (envmap == nullptr)
 			return backgroundColor;
 
-		double ax = atan2(ray.GetDirection().GetZ(), ray.GetDirection().GetX()) / (2 * M_PI) + 0.5;
-		double ay = acos(ray.GetDirection().GetY()) / M_PI;
+		double ax = atan2(ray.GetDirection().z, ray.GetDirection().x) / (2 * M_PI) + 0.5;
+		double ay = acos(ray.GetDirection().y) / M_PI;
 
 		int x = std::max(0, std::min(envmap->Width() - 1, (int) (ax * envmap->Width())));
 		int y = std::max(0, std::min(envmap->Height() - 1, (int) (ay * envmap->Height())));

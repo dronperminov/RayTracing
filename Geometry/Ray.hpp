@@ -21,7 +21,7 @@ Ray::Ray(const Vec& origin, const Vec& direction) {
 	this->origin = origin;
 	this->direction = direction;
 
-	this->invDirection = Vec(1.0 / direction.GetX(), 1.0 / direction.GetY(), 1.0 / direction.GetZ());
+	this->invDirection = Vec(1.0 / direction.x, 1.0 / direction.y, 1.0 / direction.z);
 }
 
 // получение точки

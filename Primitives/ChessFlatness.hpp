@@ -28,9 +28,9 @@ ChessFlatness::ChessFlatness(std::istream &is, Material material, Material mater
 
 	normal = normal.Normalized();
 
-	double dx = sqrt(1 - normal.GetX() * normal.GetX());
-	double dy = sqrt(1 - normal.GetY() * normal.GetY());
-	double dz = sqrt(1 - normal.GetZ() * normal.GetZ());
+	double dx = sqrt(1 - normal.x * normal.x);
+	double dy = sqrt(1 - normal.y * normal.y);
+	double dz = sqrt(1 - normal.z * normal.z);
 
 	size = Vec(dx, dy, dz) * sz;
 	cellSize = size * (2.0 / cells);
@@ -50,7 +50,7 @@ Primitive* ChessFlatness::Intersect(const Ray &ray, double &t) {
 
 	Vec delta = point - center;
 
-	if (fabs(delta.GetX()) > size.GetX() + EPSILON || fabs(delta.GetY()) > size.GetY() + EPSILON || fabs(delta.GetZ()) > size.GetZ() + EPSILON){
+	if (fabs(delta.x) > size.x + EPSILON || fabs(delta.y) > size.y + EPSILON || fabs(delta.z) > size.z + EPSILON){
         t = INF;
         return nullptr;
     }
@@ -67,18 +67,18 @@ Vec ChessFlatness::GetNormal(const Vec &point) {
 Material ChessFlatness::GetMaterial(const Vec& point) {
 	Vec delta = point - center;
 
-	double ax = asin(normal.GetX());
-	double ay = asin(normal.GetY());
-	double az = asin(normal.GetZ());
+	double ax = asin(normal.x);
+	double ay = asin(normal.y);
+	double az = asin(normal.z);
 
 	delta = delta.RotateZ(az).RotateX(ax);
 
-	double x = delta.GetX();
-	double y = delta.GetY();
-	double z = delta.GetZ();
+	double x = delta.x;
+	double y = delta.y;
+	double z = delta.z;
 
-	int dx = (fmod(fabs(x), cellSize.GetX()) < cellSize.GetX() / 2) ^ (x < 0);
-	int dz = (fmod(fabs(z), cellSize.GetZ()) < cellSize.GetZ() / 2) ^ (z < 0);
+	int dx = (fmod(fabs(x), cellSize.x) < cellSize.x / 2) ^ (x < 0);
+	int dz = (fmod(fabs(z), cellSize.z) < cellSize.z / 2) ^ (z < 0);
 
 	if (dx ^ dz)
 		return material;

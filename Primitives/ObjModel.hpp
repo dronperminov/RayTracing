@@ -120,7 +120,7 @@ BoundingBox* ObjModel::Split(std::vector<Triangle *> &triangles, int level) {
 
 		Vec delta = ((min + max) * 0.5 - center);
 
-		if ((mode == 0 && delta.GetY() < 0) || (mode == 1 && delta.GetX() < 0) || (mode == 2 && delta.GetZ() < 0)) {
+		if ((mode == 0 && delta.y < 0) || (mode == 1 && delta.x < 0) || (mode == 2 && delta.z < 0)) {
 			set1.push_back(triangles[i]);
 		}
 		else {

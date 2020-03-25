@@ -25,9 +25,9 @@ Flatness::Flatness(std::istream &is, Material material) {
 
 	normal = normal.Normalized();
 
-	double dx = sqrt(1 - normal.GetX() * normal.GetX());
-	double dy = sqrt(1 - normal.GetY() * normal.GetY());
-	double dz = sqrt(1 - normal.GetZ() * normal.GetZ());
+	double dx = sqrt(1 - normal.x * normal.x);
+	double dy = sqrt(1 - normal.y * normal.y);
+	double dz = sqrt(1 - normal.z * normal.z);
 
 	size = Vec(dx, dy, dz) * sz;
 }
@@ -46,7 +46,7 @@ Primitive* Flatness::Intersect(const Ray &ray, double &t) {
 
 	Vec delta = point - center;
 
-	if (fabs(delta.GetX()) > size.GetX() + EPSILON || fabs(delta.GetY()) > size.GetY() + EPSILON || fabs(delta.GetZ()) > size.GetZ() + EPSILON){
+	if (fabs(delta.x) > size.x + EPSILON || fabs(delta.y) > size.y + EPSILON || fabs(delta.z) > size.z + EPSILON){
         t = INF;
         return nullptr;
     }

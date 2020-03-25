@@ -61,9 +61,9 @@ Vec Picture::GetPixel(int x, int y) {
 
 void Picture::SetPixel(int x, int y, const Vec& vec) {
 	Pixel &p = pixels[(height - 1 - y) * width + x];
-	p.r = Clamp(vec.GetX() * 255);
-	p.g = Clamp(vec.GetY() * 255);
-	p.b = Clamp(vec.GetZ() * 255);
+	p.r = Clamp(vec.x * 255);
+	p.g = Clamp(vec.y * 255);
+	p.b = Clamp(vec.z * 255);
 }
 
 int Picture::Clamp(double v) const {
