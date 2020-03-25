@@ -20,12 +20,12 @@ public:
 
 // получение материала
 Material Primitive::GetMaterial(const Vec &point) {
-	return material;
+    return material;
 }
 
 // получение цвета в точке
 Vec Primitive::GetColor(const Vec &point) {
-	return GetMaterial(point).color;
+    return GetMaterial(point).color;
 }
 
 #endif
