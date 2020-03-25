@@ -1,21 +1,16 @@
 #pragma once
 
 #include <iostream>
-#include "Primitive.hpp"
+#include "RayMarching.hpp"
 
-const int MAX_RAY_STEPS = 128;
-
-// диск
-class Mandelbulb : public Primitive {
+// фрактал вида Zn+1 = Zn^power + C
+class Mandelbulb : public RayMarching {
     double power;
     double radius;
     Vec center;
 
 public:
     Mandelbulb(std::istream &is, Material material); // конструктор из потока
-
-    Primitive* Intersect(const Ray &ray, double &t); // пересечение с лучём
-    Vec GetNormal(const Vec &point); // получение нормали
 
     double DE(const Vec &pos) {
         Vec z0 = pos - center;
@@ -45,38 +40,6 @@ public:
 };
 
 // конструктор из потока
-Mandelbulb::Mandelbulb(std::istream &is, Material material) {
+Mandelbulb::Mandelbulb(std::istream &is, Material material) : RayMarching(material) {
     is >> center >> power >> radius;
-    this->material = material;
-}
-
-// пересечение с лучём
-Primitive* Mandelbulb::Intersect(const Ray &ray, double &t) {
-    t = 0;
-    
-    for (int steps = 0; steps < MAX_RAY_STEPS; steps++) {
-        double distance = DE(ray.GetPoint(t));
-        
-        if (distance < EPSILON)
-            return this;
-
-        t += distance;
-    }
-
-    t = INF;
-    return nullptr;
-}
-
-// получение нормали
-Vec Mandelbulb::GetNormal(const Vec &point) {
-    double EPS = 0.01;
-    double x = point.x;
-    double y = point.y;
-    double z = point.z;
-
-    double dx = DE(Vec(x + EPS, y, z)) - DE(Vec(x - EPS, y, z));
-    double dy = DE(Vec(x, y + EPS, z)) - DE(Vec(x, y - EPS, z));
-    double dz = DE(Vec(x, y, z + EPS)) - DE(Vec(x, y, z - EPS));
-
-    return Vec(dx, dy, dz).Normalized();
 }
