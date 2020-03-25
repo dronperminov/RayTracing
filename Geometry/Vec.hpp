@@ -33,6 +33,7 @@ public:
 	Vec operator-(const Vec& vec) const; // разность векторов
 	Vec operator*(const Vec& vec) const; // покоординатное умножение
 	Vec operator*(double a) const; // умножение на число
+	Vec operator/(double a) const; // деление на число
 
 	void Clamp(double min, double max); // обрезка значение по интервалу [min, max]
 	double GetX() const;
@@ -140,6 +141,11 @@ Vec Vec::operator*(const Vec& vec) const {
 // умножение на число
 Vec Vec::operator*(double a) const {
 	return Vec(x * a, y * a, z * a);
+}
+
+// деление на число
+Vec Vec::operator/(double a) const {
+	return Vec(x / a, y / a, z / a);
 }
 
 // обрезка значение по интервалу [min, max]

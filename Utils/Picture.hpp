@@ -3,17 +3,19 @@
 
 #include <vector>
 #include <fstream>
-
-struct Pixel {
-	unsigned char r, g, b;
-};
+#include "../Geometry/Vec.hpp"
 
 class Picture {
+	struct Pixel {
+		unsigned char b, g, r;
+	};
+
 	int width;
 	int height;
 	std::vector<Pixel> pixels; // пиксели
 
 	void Read(const std::string& filename);
+	int Clamp(double v) const;
 public:
 	Picture(int width, int height);
 	Picture(const std::string& filename);
@@ -22,7 +24,9 @@ public:
 	int Width() const;
 	int Height() const;
 
-	Pixel& operator()(int x, int y);
+	Vec GetPixel(int x, int y);
+	void SetPixel(int x, int y, const Vec& vec);
+
 	void Save(const std::string &filename);
 };
 
@@ -50,8 +54,26 @@ int Picture::Height() const {
 	return height;
 }
 
-Pixel& Picture::operator()(int x, int y) {
-	return pixels[(height - 1 - y) * width + x];
+Vec Picture::GetPixel(int x, int y) {
+	Pixel p = pixels[(height - 1 - y) * width + x];
+	return Vec(p.r / 255.0, p.g / 255.0, p.b / 255.0);
+}
+
+void Picture::SetPixel(int x, int y, const Vec& vec) {
+	Pixel &p = pixels[(height - 1 - y) * width + x];
+	p.r = Clamp(vec.GetX() * 255);
+	p.g = Clamp(vec.GetY() * 255);
+	p.b = Clamp(vec.GetZ() * 255);
+}
+
+int Picture::Clamp(double v) const {
+	if (v < 0)
+		return 0;
+
+	if (v > 255)
+		return 255;
+
+	return v;
 }
 
 void Picture::Read(const std::string& filename) {

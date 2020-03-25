@@ -79,9 +79,7 @@ Vec TexturedSphere::GetColor(const Vec &point) {
 	int x = std::max(0, std::min(texture.Width() - 1, (int) (ax * texture.Width())));
 	int y = std::max(0, std::min(texture.Height() - 1, (int) (ay * texture.Height())));
 
-	Pixel p = texture(x, y);
-
-	return Vec(p.b, p.g, p.r); // возвращаем цвет фона
+	return texture.GetPixel(x, y); // возвращаем цвет фона
 }
 
 #endif

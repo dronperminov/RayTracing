@@ -119,7 +119,7 @@ Vec RayTracer::Shading(const Vec &point, const Vec &direction, const Vec &normal
 	diffuse *= material.diffuse;
 	specular *= material.specular;
 
-    return color * diffuse + Vec(255, 255, 255) * specular;
+    return color * diffuse + Vec(specular, specular, specular);
 }
 
 Vec RayTracer::GetReflectColor(const Vec &point, const Vec &direction, const Vec &normal, Material material, int depth) {
@@ -172,9 +172,7 @@ Vec RayTracer::CastRay(const Ray &ray, double tmin, double tmax, int depth) {
 		int x = std::max(0, std::min(envmap->Width() - 1, (int) (ax * envmap->Width())));
 		int y = std::max(0, std::min(envmap->Height() - 1, (int) (ay * envmap->Height())));
 
-		Pixel p = (*envmap)(x, y);
-
-		return Vec(p.b, p.g, p.r); // возвращаем цвет фона
+		return envmap->GetPixel(x, y); // возвращаем цвет фона
 	}
 
 	Vec point = ray.GetPoint(t); // находим точку перемесения луча с объектом
@@ -291,13 +289,7 @@ Picture RayTracer::CastRays(int width, int height, const Camera &camera, int max
 			double wy = 0.5 - y / size;
 
 			Vec color = CastRay(camera.GetRay(wx, wy), 0, INF, maxDepth);
-
-			color.Clamp(0, 255); // обрезаем значения в интервале [0, 255]
-			unsigned char r = color.GetX();
-			unsigned char g = color.GetY();
-			unsigned char b = color.GetZ();
-
-			picture(x, y) = { b, g, r };
+			picture.SetPixel(x, y, color);
 		}
 	}
 

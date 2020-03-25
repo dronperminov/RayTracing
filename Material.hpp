@@ -15,13 +15,12 @@ struct Material {
 	double refraction; // коэффициент преломления 
 
 	Material();
-	Material(const Vec &color, double s, double eta, double diffuse, double specular, double reflection, double refraction);
 	Material(std::istream &is);
 
 };
 
 Material::Material() {
-	color = Vec(rand() % 255, rand() % 255, rand() % 255);
+	color = Vec(rand() % 255, rand() % 255, rand() % 255) / 255.0;
 	s = rand() % 1500;
 	eta = 1;
 
@@ -31,17 +30,6 @@ Material::Material() {
 	refraction = 0;
 }
 
-Material::Material(const Vec &color, double s, double eta, double diffuse, double specular, double reflection, double refraction) {
-	this->color = color;
-	this->s = s;
-	this->eta = eta;
-
-	this->diffuse = diffuse;
-	this->specular = specular;
-	this->reflection = reflection;
-	this->refraction = refraction;
-}
-
 Material::Material(std::istream &is) {
 	is >> color;
 	is >> s >> eta;
@@ -49,6 +37,8 @@ Material::Material(std::istream &is) {
 	is >> specular;
 	is >> reflection;
 	is >> refraction;
+
+	color = color / 255.0;
 }
 
 #endif
