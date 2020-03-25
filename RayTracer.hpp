@@ -43,7 +43,7 @@ class RayTracer {
 	Vec CastRay(const Ray &ray, double tmin, double tmax, int depth); // трассировка луча
 public:
 	void ReadScene(const std::string& path); // считывание сцены
-	Picture CastRays(int width, int height, const Camera &camera, int maxDepth);
+	Picture CastRays(int width, int height, const Camera &camera, int maxDepth, int antialiasing);
 
 	~RayTracer();
 };
@@ -277,8 +277,9 @@ void RayTracer::ReadScene(const std::string& path) {
 }
 
 // трассировка лучей
-Picture RayTracer::CastRays(int width, int height, const Camera &camera, int maxDepth) {
+Picture RayTracer::CastRays(int width, int height, const Camera &camera, int maxDepth, int antialiasing) {
 	double size = width > height ? width : height;
+	double ds = 0.5 / size;
 
 	Picture picture(width, height);
 
@@ -288,7 +289,35 @@ Picture RayTracer::CastRays(int width, int height, const Camera &camera, int max
 			double wx = x / size - 0.5;
 			double wy = 0.5 - y / size;
 
-			Vec color = CastRay(camera.GetRay(wx, wy), 0, INF, maxDepth);
+			Vec color;
+
+			if (antialiasing == 1) {
+				color = CastRay(camera.GetRay(wx, wy), 0, INF, maxDepth);
+			}
+			else if (antialiasing == 4) {
+				Vec c1 = CastRay(camera.GetRay(wx - ds, wy - ds), 0, INF, maxDepth);
+				Vec c2 = CastRay(camera.GetRay(wx + ds, wy - ds), 0, INF, maxDepth);
+				Vec c3 = CastRay(camera.GetRay(wx, wy), 0, INF, maxDepth);
+				Vec c4 = CastRay(camera.GetRay(wx, wy + ds), 0, INF, maxDepth);
+
+				color = (c1 + c2 + c3 + c4) / 4;
+			}
+			else if (antialiasing == 9) {
+				Vec c1 = CastRay(camera.GetRay(wx - ds, wy - ds), 0, INF, maxDepth);
+				Vec c2 = CastRay(camera.GetRay(wx, wy - ds), 0, INF, maxDepth);
+				Vec c3 = CastRay(camera.GetRay(wx + ds, wy - ds), 0, INF, maxDepth);
+
+				Vec c4 = CastRay(camera.GetRay(wx - ds, wy), 0, INF, maxDepth);
+				Vec c5 = CastRay(camera.GetRay(wx, wy), 0, INF, maxDepth);
+				Vec c6 = CastRay(camera.GetRay(wx + ds, wy), 0, INF, maxDepth);
+
+				Vec c7 = CastRay(camera.GetRay(wx - ds, wy + ds), 0, INF, maxDepth);
+				Vec c8 = CastRay(camera.GetRay(wx, wy + ds), 0, INF, maxDepth);
+				Vec c9 = CastRay(camera.GetRay(wx + ds, wy + ds), 0, INF, maxDepth);
+
+				color = (c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + c9) / 9;
+			}
+
 			picture.SetPixel(x, y, color);
 		}
 	}

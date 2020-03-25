@@ -31,6 +31,7 @@ int main(int argc, const char** argv) {
 	parser.AddArgument("-depth", "max depth of tracing", "2");
 	parser.AddArgument("-position", "position of camera", "0 0 0");
 	parser.AddArgument("-rotation", "rotations of camera by OX and OY in degrees", "90 0");
+	parser.AddArgument("-antialiasing", "antialiasing mode, 1, 4 or 9 rays per pixel", "1");
 
 	// если нет аргументов или один аргумент --help
 	if (argc == 1 || (argc == 2 && std::string(argv[1]) == "--help")) {
@@ -54,6 +55,7 @@ int main(int argc, const char** argv) {
 	
 	std::string scene = parser.Get("-scene"); // номер сцены
 	int depth = parser.GetInteger("-depth"); // максимальная глубина трассировки
+	int antialiasing = parser.GetInteger("-antialiasing"); // режим сглаживания
 
 	if (scene == "1") {
 		SetCamera(camera, parser, Vec(0, 2, -3), Vec(M_PI / 2.25, 0, 0));
@@ -79,7 +81,7 @@ int main(int argc, const char** argv) {
 	}
 
 	TimePoint t0 = Time::now();
-	Picture picture = tracer.CastRays(width, height, camera, depth); // трассируем лучи
+	Picture picture = tracer.CastRays(width, height, camera, depth, antialiasing); // трассируем лучи
 	TimePoint t1 = Time::now();
 	picture.Save(parser.Get("-o")); // сохраняем изображение
 
