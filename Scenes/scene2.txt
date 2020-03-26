@@ -27,7 +27,7 @@ sphere mirror -7 2 18 0.5
 sphere glass 3 1.5 10 1.5
 
 sphere mirror 0 12 16 2
-light point 0.9 0 9 16
+light point 0.9 255 255 255 0 9 16
 
 model orange_rubber Models/diablo.obj 0 1.2 14 1.2
 disk lense 0 1 -1.5 0 5 7 1
@@ -43,6 +43,6 @@ flatness red_rubber -1 0 0 8 4 16 8
 flatness green 1 0 0 -8 4 16 8
 flatness white 0 -1 0 0 12 16 8
 
-light point 1.4 -8 10 -20
-light point 1.8 0 5 16
-light point 0.8 0 1.2 12
+light point 1.4 255 255 255 -8 10 -20
+light point 1.8 255 255 255 0 5 16
+light point 0.8 255 255 255 0 1.2 12

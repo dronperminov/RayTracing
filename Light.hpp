@@ -15,16 +15,17 @@ enum class LightType {
 class Light {
 protected:
     LightType type; // тип источника
+    Vec color;
     double energy; // энергия света
 public:
     LightType GetType() const; // получение типа
     double GetEnergy() const; // получение энергии
+    Vec GetColor() const; // получение цвета
 };
 
 // постоянный источник света
 class AmbientLight : public Light {
 public:
-    AmbientLight(double energy);
     AmbientLight(std::istream &is);
 };
 
@@ -32,7 +33,6 @@ public:
 class PointLight : public Light {
     Vec position; // положение света
 public:
-    PointLight(double energy, const Vec& position);
     PointLight(std::istream &is);
     Vec GetPosition() const; // получение позиции
 };
@@ -41,7 +41,6 @@ public:
 class DirectionalLight : public Light {
     Vec direction; // направление света
 public:
-    DirectionalLight(double energy, const Vec& direction);
     DirectionalLight(std::istream &is);
     Vec GetDirection() const; // получение направления
 };
@@ -55,25 +54,21 @@ double Light::GetEnergy() const {
     return energy;
 }
 
-AmbientLight::AmbientLight(double energy) {
-    this->type = LightType::Ambient;
-    this->energy = energy;
+// получение цвета
+Vec Light::GetColor() const {
+    return color;
 }
 
 AmbientLight::AmbientLight(std::istream &is) {
     this->type = LightType::Ambient;
-    is >> energy;
-}
-
-PointLight::PointLight(double energy, const Vec& position) {
-    this->type = LightType::Point;
-    this->energy = energy;
-    this->position = position;
+    is >> energy >> color;
+    color = color / 255;
 }
 
 PointLight::PointLight(std::istream &is) {
     this->type = LightType::Point;
-    is >> energy >> position;
+    is >> energy >> color >> position;
+    color = color / 255;
 }
 
 // получение позиции
@@ -81,15 +76,10 @@ Vec PointLight::GetPosition() const {
     return position;
 }
 
-DirectionalLight::DirectionalLight(double energy, const Vec& direction) {
-    this->type = LightType::Directional;
-    this->energy = energy;
-    this->direction = direction.Normalized();
-}
-
 DirectionalLight::DirectionalLight(std::istream &is) {
     this->type = LightType::Directional;
-    is >> energy >> direction;
+    is >> energy >> color >> direction;
+    color = color / 255;
     direction = direction.Normalized();
 }
 

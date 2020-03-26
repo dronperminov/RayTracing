@@ -35,6 +35,9 @@ struct Vec {
     Vec operator*(double a) const; // умножение на число
     Vec operator/(double a) const; // деление на число
 
+    Vec& operator+=(const Vec& vec); // сложение векторов
+    Vec& operator*=(double a); // умножение на число
+
     friend std::istream& operator>>(std::istream& is, Vec& vec);
     friend std::ostream& operator<<(std::ostream& os, const Vec& vec);
 };
@@ -141,6 +144,22 @@ Vec Vec::operator*(double a) const {
 // деление на число
 Vec Vec::operator/(double a) const {
     return Vec(x / a, y / a, z / a);
+}
+
+// сложение векторов
+Vec& Vec::operator+=(const Vec& vec) {
+    x += vec.x;
+    y += vec.y;
+    z += vec.z;
+    return *this;
+}
+
+// умножение на число
+Vec& Vec::operator*=(double a) {
+    x *= a;
+    y *= a;
+    z *= a;
+    return *this;
 }
 
 std::istream& operator>>(std::istream& is, Vec& vec) {

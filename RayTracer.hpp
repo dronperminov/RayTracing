@@ -83,13 +83,13 @@ bool RayTracer::HaveIntersection(const Ray &ray, double tmin, double tmax) {
 
 // обсчёт освещения
 Vec RayTracer::Shading(const Vec &point, const Vec &direction, const Vec &normal, const Vec &color, const Material& material) {
-    double diffuse = 0;
-    double specular = 0;
+    Vec diffuse(0, 0, 0);
+    Vec specular(0, 0, 0);
 
     // проходимся по всем источникам освещения
     for (size_t i = 0; i < lights.size(); i++) {
         if (lights[i]->GetType() == LightType::Ambient) {
-            diffuse += lights[i]->GetEnergy();
+            diffuse += lights[i]->GetColor() * lights[i]->GetEnergy();
             continue;
         }
 
@@ -113,14 +113,14 @@ Vec RayTracer::Shading(const Vec &point, const Vec &direction, const Vec &normal
         double diffuseIntensity = std::max(0.0, lightDir.Dot(normal));
         double specularIntensity = std::max(0.0, lightDir.Reflect(normal).Dot(direction));
 
-        diffuse += diffuseIntensity * lights[i]->GetEnergy();
-        specular += pow(specularIntensity, material.s) * lights[i]->GetEnergy();
+        diffuse += lights[i]->GetColor() * (diffuseIntensity * lights[i]->GetEnergy());
+        specular += lights[i]->GetColor() * (pow(specularIntensity, material.s) * lights[i]->GetEnergy());
     }
 
     diffuse *= material.diffuse;
     specular *= material.specular;
 
-    return color * diffuse + Vec(specular, specular, specular);
+    return color * diffuse + specular;
 }
 
 Vec RayTracer::GetReflectColor(const Vec &point, const Vec &direction, const Vec &normal, Material material, int depth) {

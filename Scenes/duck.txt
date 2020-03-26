@@ -15,6 +15,6 @@ model ivory Models/duck.obj -3 3 18 1
 
 envmap Envmaps/envmap1.bmp
 
-light ambient 0.2
-light point 2.4 2 2 0
-light directional 0.8 1 4 4
+light ambient 0.2 255 255 255
+light point 2.4 255 255 255 2 2 0
+light directional 0.8 255 255 255 1 4 4

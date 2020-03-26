@@ -16,6 +16,6 @@ sphere mirror 7 5 18 4
 chessflatness black white 0 1 0 0 -3 16 8 4
 
 # lights
-light point 1.4 -20 20 -20
-light point 1.8 30 50 25
-light point 1.7 30 20 -30
+light point 1.4 255 255 255 -20 20 -20
+light point 1.8 255 255 255 30 50 25
+light point 1.7 255 255 255 30 20 -30
