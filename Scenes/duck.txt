@@ -1,4 +1,4 @@
-material ivory 102 102 77 50 1 0.6 0.3 0.1 0
+material ivory 102 102 77 50 1 0.7 0.3 0.1 0
 material glass 153 179 204 125 1.5 0.1 0.5 0.1 0.8
 material red_rubber 77 26 26 10 1 0.9 0.1 0 0
 material mirror 255 255 255 1425 1 0 10 0.8 0 0
@@ -16,5 +16,5 @@ model ivory Models/duck.obj -3 3 18 1
 envmap Envmaps/envmap1.bmp
 
 light ambient 0.2 255 255 255
-light point 2.4 255 255 255 2 2 0
+light point 18 255 255 255 2 2 0
 light directional 0.8 255 255 255 1 4 4

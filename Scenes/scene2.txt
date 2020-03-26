@@ -1,13 +1,13 @@
-material ivory 102 102 77 50 1 0.4 0.4 0.3 0
+material ivory 102 102 77 50 1 0.4 0.2 0.3 0
 material red_rubber 77 26 26 10 1 0.3 0.2 0.1 0
 material orange_rubber 128 78 26 10 1 0.3 0.1 0.1 0
 material mirror 255 255 255 1425 1 0 10 0.8 0 0
 material glass 153 179 204 125 3.5 0 0.5 0.1 0.8
 material black 0 0 0 1000 1 0.3 0.5 0.4 0
 
-material green 0 255 0 10 1 0.1 0.2 0.1 0
-material yellow 255 255 0 1000 1 0.1 0.2 0 0
-material white 255 255 255 100 1 0.3 0.1 0.01 0
+material green 0 255 0 10 1 0.15 0.2 0.1 0
+material yellow 255 255 0 1000 1 0.15 0.2 0 0
+material white 255 255 255 100 1 0.3 0 0.1 0
 
 material gold   255 215 0  1000 1 0.2 0.3 0.3 0
 
@@ -27,7 +27,6 @@ sphere mirror -7 2 18 0.5
 sphere glass 3 1.5 10 1.5
 
 sphere mirror 0 12 16 2
-light point 0.9 255 255 255 0 9 16
 
 model orange_rubber Models/diablo.obj 0 1.2 14 1.2
 disk lense 0 1 -1.5 0 5 7 1
@@ -43,6 +42,7 @@ flatness red_rubber -1 0 0 8 4 16 8
 flatness green 1 0 0 -8 4 16 8
 flatness white 0 -1 0 0 12 16 8
 
-light point 1.4 255 255 255 -8 10 -20
-light point 1.8 255 255 255 0 5 16
-light point 0.8 255 255 255 0 1.2 12
+light point 8 255 255 255 0 9 16
+light point 18 255 255 255 -8 10 -20
+light point 10 255 255 255 0 5 16
+light point 7 255 255 255 0 1.2 12

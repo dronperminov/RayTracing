@@ -95,15 +95,18 @@ Vec RayTracer::Shading(const Vec &point, const Vec &direction, const Vec &normal
 
         Vec lightDir; // вектор источника света
         double tmax; // максимальное расстояние
+        double norm;
 
         if (lights[i]->GetType() == LightType::Point) {
             lightDir = ((PointLight*) lights[i])->GetPosition() - point;
             tmax = lightDir.Norm() - EPSILON;
             lightDir = lightDir.Normalized();
+            norm = tmax;
         }
         else {
             lightDir = ((DirectionalLight *) lights[i])->GetDirection();
             tmax = INF;
+            norm = 1;
         }       
 
         // если есть объекты на пути к источнику света, то объект в тени
@@ -113,8 +116,8 @@ Vec RayTracer::Shading(const Vec &point, const Vec &direction, const Vec &normal
         double diffuseIntensity = std::max(0.0, lightDir.Dot(normal));
         double specularIntensity = std::max(0.0, lightDir.Reflect(normal).Dot(direction));
 
-        diffuse += lights[i]->GetColor() * (diffuseIntensity * lights[i]->GetEnergy());
-        specular += lights[i]->GetColor() * (pow(specularIntensity, material.s) * lights[i]->GetEnergy());
+        diffuse += lights[i]->GetColor() * (diffuseIntensity * lights[i]->GetEnergy() / norm);
+        specular += lights[i]->GetColor() * (pow(specularIntensity, material.s) * lights[i]->GetEnergy() / norm);
     }
 
     diffuse *= material.diffuse;
