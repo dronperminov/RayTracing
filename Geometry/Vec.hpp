@@ -130,9 +130,9 @@ Vec Vec::Abs() const {
 
 // покоординатная инверсия
 Vec Vec::Inv() const {
-    double ix = fabs(x) < EPSILON ? 0 : 1.0 / x;
-    double iy = fabs(y) < EPSILON ? 0 : 1.0 / y;
-    double iz = fabs(z) < EPSILON ? 0 : 1.0 / z;
+    double ix = fabs(x) < EPSILON ? INF : 1.0 / x;
+    double iy = fabs(y) < EPSILON ? INF : 1.0 / y;
+    double iz = fabs(z) < EPSILON ? INF : 1.0 / z;
 
     return Vec(ix, iy, iz);
 }
