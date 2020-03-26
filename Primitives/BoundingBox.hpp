@@ -70,8 +70,17 @@ Primitive* BoundingBox::Intersect(const Ray &ray, double &t) {
     if (tzmax < tmax) 
         tmax = tzmax;
 
+    t = tmin;
 
-    t = INF;
+    if (tmin < EPSILON)
+        t = tmax;
+
+    if (t < EPSILON) {
+        t = INF;
+        return nullptr;
+    }
+
+    t = tmax;
     Primitive *nearest = nullptr;
 
     for (size_t i = 0; i < primitives.size(); i++) {

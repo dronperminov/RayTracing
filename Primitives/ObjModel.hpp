@@ -130,6 +130,16 @@ BoundingBox* ObjModel::Split(std::vector<Triangle *> &triangles, int level) {
         triangles.pop_back();
     }
 
+    if (set1.size() == 0 || set2.size() == 0) {
+        for (size_t i = 0; i < set1.size(); i++)
+            box->AddPrimitive(set1[i]);
+
+        for (size_t i = 0; i < set2.size(); i++)
+            box->AddPrimitive(set2[i]);
+
+        return box;
+    }
+
     box->AddBox(Split(set1, level + 1));
     box->AddBox(Split(set2, level + 1));
     return box;
