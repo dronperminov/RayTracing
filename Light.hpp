@@ -9,7 +9,8 @@
 enum class LightType {
     Ambient, // постоянный источник
     Point, // точечный источник
-    Directional // направленный источник
+    Directional, // направленный источник
+    Spot // конусный источник
 };
 
 class Light {
@@ -42,6 +43,17 @@ class DirectionalLight : public Light {
     Vec direction; // направление света
 public:
     DirectionalLight(std::istream &is);
+    Vec GetDirection() const; // получение направления
+};
+
+class SpotLight : public Light {
+    Vec position;
+    Vec direction;
+    double angle;
+public:
+    SpotLight(std::istream &is);
+    double GetAnlge() const; // получение угла
+    Vec GetPosition() const; // получение позиции
     Vec GetDirection() const; // получение направления
 };
 
@@ -85,6 +97,31 @@ DirectionalLight::DirectionalLight(std::istream &is) {
 
 // получение направления
 Vec DirectionalLight::GetDirection() const {
+    return direction;
+}
+
+SpotLight::SpotLight(std::istream &is) {
+    this->type = LightType::Spot;
+    is >> energy >> color >> position >> direction >> angle;
+    color = color / 255;
+    direction = direction.Normalized();
+    angle = angle / 360 * M_PI;
+
+    std::cout << "spot: " << energy << " color: " << color << " dir: " << direction << ", point: " << position << ", angle: " << angle << "\n";
+}
+
+// получение угла
+double SpotLight::GetAnlge() const {
+    return angle;
+}
+
+// получение позиции
+Vec SpotLight::GetPosition() const {
+    return position;
+}
+
+// получение направления
+Vec SpotLight::GetDirection() const {
     return direction;
 }
 

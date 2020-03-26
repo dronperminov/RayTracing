@@ -17,8 +17,7 @@ struct Ray {
 Ray::Ray(const Vec& origin, const Vec& direction) {
     this->origin = origin;
     this->direction = direction;
-
-    this->invDirection = Vec(1.0 / direction.x, 1.0 / direction.y, 1.0 / direction.z);
+    this->invDirection = direction.Inv();
 }
 
 // получение точки

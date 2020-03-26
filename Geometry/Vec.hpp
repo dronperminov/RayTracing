@@ -28,6 +28,8 @@ struct Vec {
 
     Vec Min(const Vec& vec) const; // покоординатный минимум
     Vec Max(const Vec& vec) const; // покоординатный максимум
+    Vec Abs() const; // покоординатный модуль
+    Vec Inv() const; // покоординатная инверсия
 
     Vec operator+(const Vec& vec) const; // сложение векторов
     Vec operator-(const Vec& vec) const; // разность векторов
@@ -119,6 +121,20 @@ Vec Vec::Min(const Vec& vec) const {
 // покоординатный максимум
 Vec Vec::Max(const Vec& vec) const {
     return Vec(std::max(x, vec.x), std::max(y, vec.y), std::max(z, vec.z));
+}
+
+// покоординатный модуль
+Vec Vec::Abs() const {
+    return Vec(fabs(x), fabs(y), fabs(z));
+}
+
+// покоординатная инверсия
+Vec Vec::Inv() const {
+    double ix = fabs(x) < EPSILON ? 0 : 1.0 / x;
+    double iy = fabs(y) < EPSILON ? 0 : 1.0 / y;
+    double iz = fabs(z) < EPSILON ? 0 : 1.0 / z;
+
+    return Vec(ix, iy, iz);
 }
 
 // сложение векторов

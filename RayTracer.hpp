@@ -95,7 +95,7 @@ Vec RayTracer::Shading(const Vec &point, const Vec &direction, const Vec &normal
 
         Vec lightDir; // вектор источника света
         double tmax; // максимальное расстояние
-        double norm;
+        double norm = 1;
 
         if (lights[i]->GetType() == LightType::Point) {
             lightDir = ((PointLight*) lights[i])->GetPosition() - point;
@@ -103,11 +103,22 @@ Vec RayTracer::Shading(const Vec &point, const Vec &direction, const Vec &normal
             lightDir = lightDir.Normalized();
             norm = tmax;
         }
-        else {
+        else if (lights[i]->GetType() == LightType::Directional) {
             lightDir = ((DirectionalLight *) lights[i])->GetDirection();
             tmax = INF;
-            norm = 1;
-        }       
+        }
+        else if (lights[i]->GetType() == LightType::Spot) {
+            SpotLight *light = (SpotLight *) lights[i];
+
+            lightDir = light->GetPosition() - point;
+            tmax = lightDir.Norm() - EPSILON;
+
+            if (acos(light->GetDirection().Dot(lightDir.Normalized())) > light->GetAnlge())
+                continue;
+
+            lightDir = lightDir.Normalized();
+            norm = tmax;
+        }
 
         // если есть объекты на пути к источнику света, то объект в тени
         if (HaveIntersection(Ray(point, lightDir), EPSILON, tmax))
@@ -275,6 +286,9 @@ void RayTracer::ReadScene(const std::string& path) {
         }
         else if (type == "light" && name == "directional") {
             lights.push_back(new DirectionalLight(ss));
+        }
+        else if (type == "light" && name == "spot") {
+            lights.push_back(new SpotLight(ss));
         }
         else {
             std::cout << "Warning: unknown object '" << name << "'" << std::endl;
