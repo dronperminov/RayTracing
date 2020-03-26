@@ -106,8 +106,6 @@ SpotLight::SpotLight(std::istream &is) {
     color = color / 255;
     direction = direction.Normalized();
     angle = angle / 360 * M_PI;
-
-    std::cout << "spot: " << energy << " color: " << color << " dir: " << direction << ", point: " << position << ", angle: " << angle << "\n";
 }
 
 // получение угла
