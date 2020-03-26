@@ -20,6 +20,7 @@
 #include "Primitives/Disk.hpp"
 #include "Primitives/Mandelbulb.hpp"
 #include "Primitives/Torus.hpp"
+#include "Primitives/Box.hpp"
 #include "Primitives/ObjModel.hpp"
 #include "Primitives/BoundingBox.hpp"
 
@@ -274,6 +275,9 @@ void RayTracer::ReadScene(const std::string& path) {
         }
         else if (type == "torus") {
             primitives.push_back(new Torus(ss, materials[name]));
+        }
+        else if (type == "box") {
+            primitives.push_back(new Box(ss, materials[name]));
         }
         else if (type == "model") {
             primitives.push_back(new ObjModel(ss, materials[name]));
