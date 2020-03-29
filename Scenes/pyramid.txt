@@ -1,0 +1,71 @@
+width 1024
+height 768
+depth 3
+background 0 0 0
+position 1.25 1.75 -4
+rotation 77.5 -15
+
+material wall 255 255 255 10 1 0.7 0.2 0 0
+
+material black 0 0 0 1425 1 0.15 0.1 0.1 0
+material white 255 255 255 1425 1 0.15 0.1 0.1 0
+material mirror 255 255 255 1425 1 0.05 0.1 0.8 0 0
+
+material row4 196 204 204 20 1 0.3 0.2 0.5 0
+material row12 224 173 137 10 1 0.8 0.7 0.3 0
+material row13 142 114 84 10 1 0.8 0.7 0.3 0
+material row14 168 145 102 10 1 0.8 0.7 0.3 0
+material row15 181 165 114 10 1 0.8 0.7 0.3 0
+
+material row21 140 107 96 10 1 0.8 0.7 0.3 0
+material row22 109 94 68 10 1 0.8 0.7 0.3 0
+material row23 99 89 61 10 1 0.8 0.7 0.3 0
+material row24 137 130 81 10 1 0.8 0.7 0.3 0
+material row25 130 130 89 10 1 0.8 0.7 0.3 0
+
+material row31 102 102 102 10 1 0.8 0.7 0.3 0
+material row32 104 107 104 10 1 0.8 0.7 0.3 0
+material row33 107 107 107 10 1 0.8 0.7 0.3 0
+material row34 112 112 112 10 1 0.8 0.7 0.3 0
+
+material row42 165 147 107 10 1 0.8 0.7 0.3 0
+
+material row5 165 165 165 10 1 0.8 0.7 0.3 0
+
+chessflatness black white 0 1 0 0 0 0 5 6.5
+
+flatness wall 0 0 -1 0 5 5 5
+flatness wall 1 0 0 -5 5 0 5
+flatness wall -1 0 0 5 5 0 5
+flatness wall 0 0 1 0 5 -5 5
+flatness wall 0 -1 0 0 5 0 5
+
+sphere mirror -1.25 0.25 0 0.25
+sphere row12 -0.75 0.25 0 0.25
+sphere row13 -0.25 0.25 0 0.25
+sphere row14 0.25 0.25 0 0.25
+sphere row15 0.75 0.25 0 0.25
+sphere mirror 1.25 0.25 0 0.25
+
+sphere row21 -1 0.65 0.05 0.25
+sphere row22 -0.5 0.65 0.05 0.25
+sphere row23 0 0.65 0.05 0.25
+sphere row24 0.5 0.65 0.05 0.25
+sphere row25 1 0.65 0.05 0.25
+
+sphere row31 -0.75 1.05 0.1 0.25
+sphere row32 -0.25 1.05 0.1 0.25
+sphere row33 0.25 1.05 0.1 0.25
+sphere row34 0.75 1.05 0.1 0.25
+
+sphere row4 -0.5 1.45 0.15 0.25
+sphere row42 0 1.45 0.15 0.25
+sphere row4 0.5 1.45 0.15 0.25
+
+sphere row5 -0.25 1.85 0.2 0.25
+sphere row5 0.25 1.85 0.2 0.25
+
+sphere mirror 0 2.25 0.25 0.25
+
+light point 5 255 255 255 -2 4.5 -3
+light point 4.5 255 255 255 0 0 4.5

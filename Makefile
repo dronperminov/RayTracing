@@ -10,5 +10,6 @@ example:
 	rt -scene Scenes/scene3.txt -output Examples/scene3.bmp
 	rt -scene Scenes/duck.txt -output Examples/duck.bmp
 	rt -scene Scenes/fractal.txt -output Examples/fractal.bmp
+	rt -scene Scenes/pyramid.txt -output Examples/pyramid.bmp
 	rt -scene Scenes/spheres.txt -output Examples/spheres.bmp
 	rt -scene Scenes/torus.txt -output Examples/torus.bmp
