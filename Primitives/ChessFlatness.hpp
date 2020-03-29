@@ -1,5 +1,4 @@
-#ifndef CHESS_FLATNESS_HPP
-#define CHESS_FLATNESS_HPP
+#pragma once
 
 #include <iostream>
 #include "Primitive.hpp"
@@ -85,5 +84,3 @@ Material ChessFlatness::GetMaterial(const Vec& point) {
 
     return material2;
 }
-
-#endif

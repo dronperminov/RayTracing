@@ -1,8 +1,6 @@
-#ifndef LIGHT_HPP
-#define LIGHT_HPP
+#pragma once
 
 #include <iostream>
-
 #include "Geometry/Vec.hpp"
 
 // тип света
@@ -122,5 +120,3 @@ Vec SpotLight::GetPosition() const {
 Vec SpotLight::GetDirection() const {
     return direction;
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef FLATNESS_HPP
-#define FLATNESS_HPP
+#pragma once
 
 #include <iostream>
 #include "Primitive.hpp"
@@ -58,5 +57,3 @@ Primitive* Flatness::Intersect(const Ray &ray, double &t) {
 Vec Flatness::GetNormal(const Vec &point) {
     return normal;
 }
-
-#endif

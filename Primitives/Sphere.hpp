@@ -1,5 +1,4 @@
-#ifndef SPHERE_HPP
-#define SPHERE_HPP
+#pragma once
 
 #include <iostream>
 #include "Primitive.hpp"
@@ -81,5 +80,3 @@ Vec TexturedSphere::GetColor(const Vec &point) {
 
     return texture.GetPixel(x, y); // возвращаем цвет фона
 }
-
-#endif

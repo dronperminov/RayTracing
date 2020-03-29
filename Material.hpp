@@ -1,5 +1,4 @@
-#ifndef MATERIAL_HPP
-#define MATERIAL_HPP
+#pragma once
 
 #include <iostream>
 #include "Geometry/Vec.hpp"
@@ -40,5 +39,3 @@ Material::Material(std::istream &is) {
 
     color = color / 255.0;
 }
-
-#endif

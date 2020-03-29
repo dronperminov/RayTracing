@@ -1,5 +1,4 @@
-#ifndef ARGUMENTS_PARSER_HPP
-#define ARGUMENTS_PARSER_HPP
+#pragma once
 
 #include <iostream>
 #include <sstream>
@@ -88,5 +87,3 @@ Vec ArgumentsParser::GetVec(const std::string &key) {
     ss >> vec;
     return vec;
 }
-
-#endif

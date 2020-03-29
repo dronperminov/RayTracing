@@ -1,5 +1,4 @@
-#ifndef PRIMITIVE_HPP
-#define PRIMITIVE_HPP
+#pragma once
 
 #include <iostream>
 #include "../Material.hpp"
@@ -27,5 +26,3 @@ Material Primitive::GetMaterial(const Vec &point) {
 Vec Primitive::GetColor(const Vec &point) {
     return GetMaterial(point).color;
 }
-
-#endif

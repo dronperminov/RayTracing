@@ -1,5 +1,4 @@
-#ifndef RAY_HPP
-#define RAY_HPP
+#pragma once
 
 #include <iostream>
 #include "Vec.hpp"
@@ -35,5 +34,3 @@ double MinThreshold(double t1, double t2, double threshold) {
 
     return INF;
 }
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef TRIANGLE_HPP
-#define TRIANGLE_HPP
+#pragma once
 
 #include <iostream>
 #include "Primitive.hpp"
@@ -85,5 +84,3 @@ void Triangle::UpdateBbox(Vec& min, Vec &max) {
     min = min.Min(v1).Min(v2).Min(v3);
     max = max.Max(v1).Max(v2).Max(v3);
 }
-
-#endif

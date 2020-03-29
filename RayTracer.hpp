@@ -1,5 +1,4 @@
-#ifndef RAY_TRACER_HPP
-#define RAY_TRACER_HPP
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -358,5 +357,3 @@ RayTracer::~RayTracer() {
     for (size_t i = 0; i < lights.size(); i++)
         delete lights[i];
 }
-
-#endif

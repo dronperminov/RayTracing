@@ -1,5 +1,4 @@
-#ifndef BOUNDING_BOX_HPP
-#define BOUNDING_BOX_HPP
+#pragma once
 
 #include <iostream>
 #include "Primitive.hpp"
@@ -119,5 +118,3 @@ void BoundingBox::AddBox(BoundingBox *primitive) {
     this->min = this->min.Min(primitive->min);
     this->max = this->max.Max(primitive->max);
 }
-
-#endif

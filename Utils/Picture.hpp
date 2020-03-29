@@ -1,5 +1,4 @@
-#ifndef BITMAP_GUARDIAN_H
-#define BITMAP_GUARDIAN_H
+#pragma once
 
 #include <vector>
 #include <fstream>
@@ -135,5 +134,3 @@ void Picture::Save(const std::string &filename) {
     out.flush();
     out.close();
 }
-
-#endif 

@@ -1,5 +1,4 @@
-#ifndef VEC_HPP
-#define VEC_HPP
+#pragma once
 
 #include <iostream>
 #include <cmath>
@@ -185,5 +184,3 @@ std::istream& operator>>(std::istream& is, Vec& vec) {
 std::ostream& operator<<(std::ostream& os, const Vec& vec) {
     return os << "[" << vec.x << " " << vec.y << " " << vec.z << "]";
 }
-
-#endif

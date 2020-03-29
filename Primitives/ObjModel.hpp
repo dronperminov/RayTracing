@@ -1,5 +1,4 @@
-#ifndef OBJ_MODEL
-#define OBJ_MODEL
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -196,5 +195,3 @@ Vec ObjModel::GetNormal(const Vec &point) {
 Material ObjModel::GetMaterial(const Vec &point) {
     return box->GetMaterial(point);
 }
-
-#endif
