@@ -90,7 +90,7 @@ DirectionalLight::DirectionalLight(std::istream &is) {
     this->type = LightType::Directional;
     is >> energy >> color >> direction;
     color = color / 255;
-    direction = direction.Normalized();
+    direction.Normalize();
 }
 
 // получение направления
@@ -102,7 +102,7 @@ SpotLight::SpotLight(std::istream &is) {
     this->type = LightType::Spot;
     is >> energy >> color >> position >> direction >> angle;
     color = color / 255;
-    direction = direction.Normalized();
+    direction.Normalize();
     angle = angle / 360 * M_PI;
 }
 

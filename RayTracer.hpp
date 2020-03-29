@@ -59,25 +59,21 @@ Vec RayTracer::CastRay(const Scene& scene, const Ray &ray, double tmin, double t
         double ax = atan2(ray.direction.z, ray.direction.x) / (2 * M_PI) + 0.5;
         double ay = acos(ray.direction.y) / M_PI;
 
-        int x = std::max(0, std::min(scene.envmap->Width() - 1, (int) (ax * scene.envmap->Width())));
-        int y = std::max(0, std::min(scene.envmap->Height() - 1, (int) (ay * scene.envmap->Height())));
-
-        return scene.envmap->GetPixel(x, y); // возвращаем цвет фона
+        return scene.envmap->GetPixel(ax, ay); // возвращаем цвет фона
     }
 
     Vec point = ray.GetPoint(t); // находим точку перемесения луча с объектом
     Vec normal = primitive->GetNormal(point); // получаем нормаль в этой точке
-    Vec direction = ray.direction;
     Material material = primitive->GetMaterial(point); // получаем материал ближайшего объекта
     Vec color = primitive->GetColor(point); // получаем цвет объекта в точке
 
-    Vec rayColor = scene.Shading(point, direction, normal, color, material);
+    Vec rayColor = scene.Shading(point, ray.direction, normal, color, material);
 
     if (depth <= 0) // если достигли минимальной глубины
         return rayColor; // то возвращаем диффузный и зеркальный цвет 
 
-    rayColor = rayColor + GetReflectColor(scene, point, direction, normal, material, depth - 1);
-    rayColor = rayColor + GetRefractColor(scene, point, direction, normal, material, depth - 1);
+    rayColor += GetReflectColor(scene, point, ray.direction, normal, material, depth - 1);
+    rayColor += GetRefractColor(scene, point, ray.direction, normal, material, depth - 1);
 
     return rayColor;
 }

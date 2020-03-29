@@ -77,7 +77,7 @@ Vec Scene::Shading(const Vec &point, const Vec &direction, const Vec &normal, co
         if (light->GetType() == LightType::Point) {
             lightDir = ((PointLight*) light)->GetPosition() - point;
             tmax = lightDir.Norm() - EPSILON;
-            lightDir = lightDir.Normalized();
+            lightDir.Normalize();
             energy /= tmax;
         }
         else if (light->GetType() == LightType::Directional) {
@@ -87,11 +87,11 @@ Vec Scene::Shading(const Vec &point, const Vec &direction, const Vec &normal, co
         else if (light->GetType() == LightType::Spot) {
             lightDir = ((SpotLight *) light)->GetPosition() - point;
             tmax = lightDir.Norm() - EPSILON;
+            lightDir.Normalize();
 
-            if (acos(((SpotLight *) light)->GetDirection().Dot(lightDir.Normalized())) > ((SpotLight *) light)->GetAnlge())
+            if (acos(((SpotLight *) light)->GetDirection().Dot(lightDir)) > ((SpotLight *) light)->GetAnlge())
                 continue;
 
-            lightDir = lightDir.Normalized();
             energy /= tmax;
         }
 

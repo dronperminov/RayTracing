@@ -24,6 +24,7 @@ public:
     int Height() const;
 
     Vec GetPixel(int x, int y);
+    Vec GetPixel(double u, double v);
     void SetPixel(int x, int y, const Vec& vec);
 
     void Save(const std::string &filename);
@@ -54,6 +55,13 @@ int Picture::Height() const {
 }
 
 Vec Picture::GetPixel(int x, int y) {
+    Pixel p = pixels[(height - 1 - y) * width + x];
+    return Vec(p.r / 255.0, p.g / 255.0, p.b / 255.0);
+}
+
+Vec Picture::GetPixel(double u, double v) {
+    int x = std::max(0, std::min(width - 1, (int) (u * width)));
+    int y = std::max(0, std::min(height - 1, (int) (v * height)));
     Pixel p = pixels[(height - 1 - y) * width + x];
     return Vec(p.r / 255.0, p.g / 255.0, p.b / 255.0);
 }

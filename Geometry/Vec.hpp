@@ -16,6 +16,7 @@ struct Vec {
     double Norm() const; // получение нормы вектора
     double Dot(const Vec& vec) const; // скалярное произведение векторов
 
+    void Normalize(); // нормализация вектора
     Vec Normalized() const; // получение нормализованного вектора
     Vec Cross(const Vec& vec) const; // векторное произведение векторов
     Vec Reflect(const Vec& normal) const; // отражение относительно нормали
@@ -70,6 +71,18 @@ double Vec::Norm() const {
 // скалярное произведение векторов
 double Vec::Dot(const Vec& vec) const {
     return x*vec.x + y*vec.y + z*vec.z;
+}
+
+// нормализация вектора
+void Vec::Normalize() {
+    double norm = Norm();
+
+    if (norm < EPSILON)
+        return;
+
+    x /= norm;
+    y /= norm;
+    z /= norm;
 }
 
 // получение нормализованного вектора

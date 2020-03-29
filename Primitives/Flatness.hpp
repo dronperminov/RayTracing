@@ -22,7 +22,7 @@ Flatness::Flatness(std::istream &is, Material material) {
     this->material = material;
     is >> normal >> center >> sz;
 
-    normal = normal.Normalized();
+    normal.Normalize();
 
     double dx = sqrt(1 - normal.x * normal.x);
     double dy = sqrt(1 - normal.y * normal.y);

@@ -20,7 +20,7 @@ public:
 InfinityFlatness::InfinityFlatness(std::istream &is, Material material) {
     this->material = material;
     is >> normal >> bias;
-    normal = normal.Normalized();
+    normal.Normalize();
 }
 
 // пересечение с лучём

@@ -32,5 +32,6 @@ Camera::Camera(const Vec &position, const Vec &rotation) {
 // получение луча
 Ray Camera::GetRay(double wx, double wy) const {
     Vec direction = Vec(wx, wy, 1).Transform(R);
-    return Ray(position, direction.Normalized());
+    direction.Normalize();
+    return Ray(position, direction);
 }

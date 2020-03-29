@@ -72,11 +72,8 @@ TexturedSphere::TexturedSphere(std::istream& is, Material material) : Sphere(is,
 
 Vec TexturedSphere::GetColor(const Vec &point) {
     Vec normal = GetNormal(point);
-    double ax = atan2(normal.z, normal.x) / (2 * M_PI) + 0.5;
-    double ay = acos(normal.y) / M_PI;
+    double u = atan2(normal.z, normal.x) / (2 * M_PI) + 0.5;
+    double v = acos(normal.y) / M_PI;
 
-    int x = std::max(0, std::min(texture.Width() - 1, (int) (ax * texture.Width())));
-    int y = std::max(0, std::min(texture.Height() - 1, (int) (ay * texture.Height())));
-
-    return texture.GetPixel(x, y); // возвращаем цвет фона
+    return texture.GetPixel(u, v); // возвращаем цвет фона
 }

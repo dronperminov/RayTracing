@@ -21,7 +21,7 @@ public:
 Disk::Disk(std::istream &is, Material material) {
     this->material = material;
     is >> normal >> center >> radius;
-    normal = normal.Normalized();
+    normal.Normalize();
 }
 
 // пересечение с лучём

@@ -25,7 +25,7 @@ ChessFlatness::ChessFlatness(std::istream &is, Material material, Material mater
     this->material2 = material2;
     is >> normal >> center >> sz >> cells;
 
-    normal = normal.Normalized();
+    normal.Normalize();
 
     double dx = sqrt(1 - normal.x * normal.x);
     double dy = sqrt(1 - normal.y * normal.y);
