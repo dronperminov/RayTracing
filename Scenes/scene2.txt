@@ -1,3 +1,12 @@
+background 0 0 0
+
+width 1024
+height 768
+depth 3
+
+position 0 6.5 -7
+rotation 80 0
+
 material ivory 102 102 77 50 1 0.4 0.2 0.3 0
 material red_rubber 77 26 26 10 1 0.3 0.2 0.1 0
 material orange_rubber 128 78 26 10 1 0.3 0.1 0.1 0
@@ -12,8 +21,6 @@ material white 255 255 255 100 1 0.3 0 0.1 0
 material gold   255 215 0  1000 1 0.2 0.3 0.3 0
 
 material lense 0 0 0 500 4 0.1 0.5 0.1 0.8
-
-background 0 0 0
 
 sphere ivory -4 2 18 2
 sphere red_rubber -4 4 18 1

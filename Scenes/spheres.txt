@@ -1,0 +1,120 @@
+width 1024
+height 768
+depth 4
+background 0 0 0
+position 0 15 -20
+rotation 45 0 
+
+material black 0 0 0 1425 1 0.5 0.1 0.1 0
+material white 255 255 255 1425 1 0.5 0.1 0.1 0
+
+material pink 186 17 94 100 1 0.7 0.5 0.7 0
+material green 114 173 17 100 1 0.7 0.5 0.7 0
+material blue2 17 112 173 100 1 0.7 0.5 0.7 0
+material blue3 20 48 96 100 1 0.7 0.5 0.7 0
+material blue4 17 22 30 100 1 0.7 0.5 0.7 0
+material blue5 12 12 12 100 1 0.7 0.5 0.7 0
+material blue6 7 7 7 100 1 0.7 0.5 0.7 0
+
+chessflatness black white 0 1 0 0 0 0 8 4
+
+sphere pink 0 1.5 0 1.5
+sphere green   2.5 1   0.0 1
+sphere green  1.25 1 2.1651 1
+sphere green -1.25 1 2.1651 1
+sphere green  -2.5 1 1.3397e-07 1
+sphere green -1.25 1 -2.1651 1
+sphere green  1.25 1 -2.1651 1
+sphere blue2 2.3233 1 3.6183 1
+sphere blue2 -0.24721 1 4.2929 1
+sphere blue2 -2.7233 1 3.3277 1
+sphere blue2 -4.1592 1 1.0915 1
+sphere blue2 -4.0064 1 -1.5617 1
+sphere blue2 -2.3233 1 -3.6183 1
+sphere blue2 0.24721 1 -4.2929 1
+sphere blue2 2.7233 1 -3.3277 1
+sphere blue2 4.1592 1 -1.0915 1
+sphere blue2 4.0064 1 1.5617 1
+sphere blue3 -2.5385 1 5.5467 1
+sphere blue3 -4.6937 1 3.896 1
+sphere blue3 -5.9193 1 1.4736 1
+sphere blue3 -5.9725 1 -1.2406 1
+sphere blue3 -4.8428 1 -3.7091 1
+sphere blue3 -2.7539 1 -5.443 1
+sphere blue3 -0.11952 1 -6.0988 1
+sphere blue3 2.5385 1 -5.5467 1
+sphere blue3 4.6937 1 -3.896 1
+sphere blue3 5.9193 1 -1.4736 1
+sphere blue3 5.9725 1 1.2406 1
+sphere blue3 4.8428 1 3.7091 1
+sphere blue3 2.7539 1 5.443 1
+sphere blue3 0.11952 1 6.0988 1
+sphere blue4 -7.8209 1 1.1148 1
+sphere blue4 -7.7306 1 -1.6273 1
+sphere blue4 -6.7078 1 -4.1732 1
+sphere blue4 -4.876 1 -6.2157 1
+sphere blue4 -2.456 1 -7.5085 1
+sphere blue4 0.26018 1 -7.8957 1
+sphere blue4 2.945 1 -7.3306 1
+sphere blue4 5.2746 1 -5.8812 1
+sphere blue4 6.968 1 -3.7225 1
+sphere blue4 7.8209 1 -1.1148 1
+sphere blue4 7.7306 1 1.6273 1
+sphere blue4 6.7078 1 4.1732 1
+sphere blue4 4.876 1 6.2157 1
+sphere blue4 2.456 1 7.5085 1
+sphere blue4 -0.26018 1 7.8957 1
+sphere blue4 -2.945 1 7.3306 1
+sphere blue4 -5.2746 1 5.8812 1
+sphere blue4 -6.968 1 3.7225 1
+sphere blue5 -6.3403 1 -7.341 1
+sphere blue5 -4.0153 1 -8.8299 1
+sphere blue5 -1.365 1 -9.6035 1
+sphere blue5 1.3959 1 -9.599 1
+sphere blue5 4.0437 1 -8.8169 1
+sphere blue5 6.3639 1 -7.3205 1
+sphere blue5 8.1686 1 -5.2311 1
+sphere blue5 9.3115 1 -2.7178 1
+sphere blue5   9.7 1 0.01561 1
+sphere blue5 9.3027 1 2.7478 1
+sphere blue5 8.1517 1 5.2573 1
+sphere blue5 6.3403 1 7.341 1
+sphere blue5 4.0153 1 8.8299 1
+sphere blue5 1.365 1 9.6035 1
+sphere blue5 -1.3959 1 9.599 1
+sphere blue5 -4.0437 1 8.8169 1
+sphere blue5 -6.3639 1 7.3205 1
+sphere blue5 -8.1686 1 5.2311 1
+sphere blue5 -9.3115 1 2.7178 1
+sphere blue5  -9.7 1 -0.01561 1
+sphere blue5 -9.3027 1 -2.7478 1
+sphere blue5 -8.1517 1 -5.2573 1
+sphere blue6 3.2621 1 -11.028 1
+sphere blue6 5.8064 1 -9.9265 1
+sphere blue6 8.0133 1 -8.2485 1
+sphere blue6 9.7544 1 -6.0911 1
+sphere blue6 10.929 1 -3.5797 1
+sphere blue6 11.468 1 -0.86032 1
+sphere blue6 11.34 1 1.9091 1
+sphere blue6 10.554 1 4.5676 1
+sphere blue6 9.1543 1 6.9606 1
+sphere blue6 7.2225 1 8.9491 1
+sphere blue6 4.8709 1 10.417 1
+sphere blue6 2.2363 1 11.28 1
+sphere blue6 -0.52824 1 11.488 1
+sphere blue6 -3.2621 1 11.028 1
+sphere blue6 -5.8064 1 9.9265 1
+sphere blue6 -8.0133 1 8.2485 1
+sphere blue6 -9.7544 1 6.0911 1
+sphere blue6 -10.929 1 3.5797 1
+sphere blue6 -11.468 1 0.86032 1
+sphere blue6 -11.34 1 -1.9091 1
+sphere blue6 -10.554 1 -4.5676 1
+sphere blue6 -9.1543 1 -6.9606 1
+sphere blue6 -7.2225 1 -8.9491 1
+sphere blue6 -4.8709 1 -10.417 1
+sphere blue6 -2.2363 1 -11.28 1
+sphere blue6 0.52824 1 -11.488 1
+
+light point 7 255 255 255 -2 5 0
+light point 7 255 255 255 2 5 -4

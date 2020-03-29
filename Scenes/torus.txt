@@ -1,4 +1,10 @@
 envmap Envmaps/envmap3.bmp
+width 1024
+height 768
+depth 3
+
+position 0 1.5 -7
+rotation 90 0
 
 material black 0 0 0        1425 1 0.15 0.1 0.8 0
 material white 255 255 255  1425 1 0.15 0.1 0.8 0

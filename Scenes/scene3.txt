@@ -1,4 +1,10 @@
 background 0 0 0 
+width 1024
+height 768
+depth 4
+
+position 0 4 -7.99
+rotation 70 0
 
 light directional 0.4 255 255 255 0 1 0
 light point 14 255 255 255 0 0.5 8
