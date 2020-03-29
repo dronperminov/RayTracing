@@ -39,13 +39,13 @@ void ChangeScene(Scene &scene, ArgumentsParser &parser) {
 
 int main(int argc, const char** argv) {
     ArgumentsParser parser;
-    parser.AddArgument("-output", "filename of output picture", "out.bmp");
-    parser.AddArgument("-scene", "path to scene file", "1");
-    parser.AddArgument("-size", "size of output picture", "1024 768");
-    parser.AddArgument("-depth", "max depth of tracing", "2");
-    parser.AddArgument("-position", "position of camera", "0 0 0");
-    parser.AddArgument("-rotation", "rotations of camera by OX and OY in degrees", "90 0");
-    parser.AddArgument("-antialiasing", "antialiasing mode, 1, 4 or 9 rays per pixel", "1");
+    parser.AddArgument("-output", "Filename of output picture", "out.bmp", "-o");
+    parser.AddArgument("-scene", "Path to scene file", "1", "-f");
+    parser.AddArgument("-size", "Size of output picture", "1024 768", "-s");
+    parser.AddArgument("-depth", "Max depth of tracing", "2", "-d");
+    parser.AddArgument("-position", "Position of camera", "0 0 0", "-p");
+    parser.AddArgument("-rotation", "Rotations of camera by OX and OY in degrees", "90 0", "-r");
+    parser.AddArgument("-antialiasing", "Antialiasing mode, 1, 4 or 9 rays per pixel", "1", "-a");
 
     // если нет аргументов или один аргумент --help
     if (argc == 1 || (argc == 2 && std::string(argv[1]) == "--help")) {
