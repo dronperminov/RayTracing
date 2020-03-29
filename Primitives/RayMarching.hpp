@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Primitive.hpp"
 
-const int MAX_RAY_STEPS = 128;
+const int MAX_RAY_STEPS = 2048;
 
 class RayMarching : public Primitive {
 public:

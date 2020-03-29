@@ -25,7 +25,7 @@ double Mandelbulb::DE(const Vec &pos) {
     double dr = 1.0;
     double r = 0.0;
 
-    for (int i = 0; i < 64; i++) {
+    for (int i = 0; i < 32; i++) {
         r = z.Norm();
         
         if (r > radius)
