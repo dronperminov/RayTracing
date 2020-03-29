@@ -65,31 +65,31 @@ Vec Scene::Shading(const Vec &point, const Vec &direction, const Vec &normal, co
 
     // проходимся по всем источникам освещения
     for (Light *light : lights) {
-        if (light->GetType() == LightType::Ambient) {
-            diffuse += light->GetColor() * light->GetEnergy();
+        if (light->type == LightType::Ambient) {
+            diffuse += light->color * light->energy;
             continue;
         }
 
         Vec lightDir; // вектор источника света
         double tmax; // максимальное расстояние
-        double energy = light->GetEnergy(); // энергия источника
+        double energy = light->energy; // энергия источника
 
-        if (light->GetType() == LightType::Point) {
-            lightDir = ((PointLight*) light)->GetPosition() - point;
+        if (light->type == LightType::Point) {
+            lightDir = ((PointLight*) light)->position - point;
             tmax = lightDir.Norm() - EPSILON;
             lightDir.Normalize();
             energy /= tmax;
         }
-        else if (light->GetType() == LightType::Directional) {
-            lightDir = ((DirectionalLight *) light)->GetDirection();
+        else if (light->type == LightType::Directional) {
+            lightDir = ((DirectionalLight *) light)->direction;
             tmax = INF;
         }
-        else if (light->GetType() == LightType::Spot) {
-            lightDir = ((SpotLight *) light)->GetPosition() - point;
+        else if (light->type == LightType::Spot) {
+            lightDir = ((SpotLight *) light)->direction - point;
             tmax = lightDir.Norm() - EPSILON;
             lightDir.Normalize();
 
-            if (acos(((SpotLight *) light)->GetDirection().Dot(lightDir)) > ((SpotLight *) light)->GetAnlge())
+            if (acos(((SpotLight *) light)->direction.Dot(lightDir)) > ((SpotLight *) light)->angle)
                 continue;
 
             energy /= tmax;
@@ -102,8 +102,8 @@ Vec Scene::Shading(const Vec &point, const Vec &direction, const Vec &normal, co
         double diffuseIntensity = std::max(0.0, lightDir.Dot(normal));
         double specularIntensity = std::max(0.0, lightDir.Reflect(normal).Dot(direction));
 
-        diffuse += light->GetColor() * (diffuseIntensity * energy);
-        specular += light->GetColor() * (pow(specularIntensity, material.s) * energy);
+        diffuse += light->color * (diffuseIntensity * energy);
+        specular += light->color * (pow(specularIntensity, material.s) * energy);
     }
 
     diffuse *= material.diffuse;
