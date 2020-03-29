@@ -6,27 +6,41 @@
 #include <cmath>
 
 #include "Utils/ArgumentsParser.hpp"
+#include "Utils/Picture.hpp"
+#include "Utils/SceneReader.hpp"
 #include "RayTracer.hpp"
 
 typedef std::chrono::high_resolution_clock Time;
 typedef std::chrono::time_point<Time> TimePoint; 
 typedef std::chrono::milliseconds ms;
 
-// получение камеры
-void SetCamera(Camera &camera, ArgumentsParser &parser, Vec position, Vec rotation) {
-    if (!parser.IsSet("-position")) {
-        camera.SetPosition(position);
+// обновление параметров сцены
+void ChangeScene(Scene &scene, ArgumentsParser &parser) {
+    if (parser.IsSet("-size")) {
+        std::stringstream ss(parser.Get("-size"));
+        ss >> scene.width >> scene.height;
     }
 
-    if (!parser.IsSet("-rotation")) {
-        camera.SetRotation(rotation);
+    // максимальная глубина трассировки
+    if (parser.IsSet("-depth")) {
+        scene.depth = parser.GetInteger("-depth");
+    }
+
+    // получаем положение камеры
+    if (parser.IsSet("-position")) {
+        scene.position = parser.GetVec("-position");
+    }
+
+    // получаем повороты камеры
+    if (parser.IsSet("-rotation")) {
+        scene.rotation = parser.GetVec("-rotation") * (M_PI / 180);
     }
 }
 
 int main(int argc, const char** argv) {
     ArgumentsParser parser;
-    parser.AddArgument("-o", "filename of output picture", "out.bmp");
-    parser.AddArgument("-scene", "number of scene or path to scene file", "1");
+    parser.AddArgument("-output", "filename of output picture", "out.bmp");
+    parser.AddArgument("-scene", "path to scene file", "1");
     parser.AddArgument("-size", "size of output picture", "1024 768");
     parser.AddArgument("-depth", "max depth of tracing", "2");
     parser.AddArgument("-position", "position of camera", "0 0 0");
@@ -43,47 +57,19 @@ int main(int argc, const char** argv) {
     if (!parser.ParseArguments(argc, argv))
         return 0; // выходим, если не получилось
 
-    RayTracer tracer; // создаём трассировщик лучей
+    SceneReader reader; // создаём считыватель сцены
+    Scene scene = reader.Read(parser.Get("-scene")); // считываем сцену
 
-    int width, height; // размеры изображения
-    std::stringstream ss(parser.Get("-size"));
-    ss >> width >> height;
+    ChangeScene(scene, parser); // обновляем параметры, заданые пользователем
 
-    Vec position = parser.GetVec("-position"); // получаем положение камеры
-    Vec rotation = parser.GetVec("-rotation") * (M_PI / 180); // переводим в радианы
-    Camera camera(position, rotation); // создаём камеру
-    
-    std::string scene = parser.Get("-scene"); // номер сцены
-    int depth = parser.GetInteger("-depth"); // максимальная глубина трассировки
     int antialiasing = parser.GetInteger("-antialiasing"); // режим сглаживания
 
-    if (scene == "1") {
-        SetCamera(camera, parser, Vec(0, 2, -3), Vec(M_PI / 2.25, 0, 0));
-        tracer.ReadScene("Scenes/scene1.txt");
-    }
-    else if (scene == "2") {
-        if (!parser.IsSet("-depth"))
-            depth = 3;
-
-        SetCamera(camera, parser, Vec(0, 6.5, -7), Vec(M_PI / 2.25, 0, 0));
-        tracer.ReadScene("Scenes/scene2.txt");
-    }
-    else if (scene == "3") {
-        SetCamera(camera, parser, Vec(0, 4, -7.99), Vec(M_PI / 2.57, 0, 0));
-
-        if (!parser.IsSet("-depth"))
-            depth = 4;
-
-        tracer.ReadScene("Scenes/scene3.txt");
-    }
-    else {
-        tracer.ReadScene(scene);    
-    }
-
     TimePoint t0 = Time::now();
-    Picture picture = tracer.CastRays(width, height, camera, depth, antialiasing); // трассируем лучи
+    RayTracer tracer; // создаём трассировщик лучей
+    Picture picture = tracer.Render(scene, antialiasing); // трассируем лучи
     TimePoint t1 = Time::now();
-    picture.Save(parser.Get("-o")); // сохраняем изображение
+    
+    picture.Save(parser.Get("-output")); // сохраняем изображение
 
     ms d = std::chrono::duration_cast<ms>(t1 - t0);
     std::cout << "end by " << d.count() << " ms" << std::endl;

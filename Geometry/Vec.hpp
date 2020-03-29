@@ -21,8 +21,8 @@ struct Vec {
     Vec Reflect(const Vec& normal) const; // отражение относительно нормали
     Vec Transform(const double matrix[3][3]) const; // матричное преобразование
 
-    Vec RotateX(double alpha) const; // вращение относительно Z
-    Vec RotateY(double alpha) const; // вращение относительно Z
+    Vec RotateX(double alpha) const; // вращение относительно X
+    Vec RotateY(double alpha) const; // вращение относительно Y
     Vec RotateZ(double alpha) const; // вращение относительно Z
 
     Vec Min(const Vec& vec) const; // покоординатный минимум
