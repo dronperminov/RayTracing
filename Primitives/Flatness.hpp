@@ -12,7 +12,7 @@ protected:
 public:
     Flatness(std::istream &is, Material material); // конструктор из потока
 
-    Primitive* Intersect(const Ray &ray, double &t); // пересечение с лучём
+    Primitive* Intersect(const Ray &ray, double tmin, double tmax, double &t); // пересечение с лучём
     Vec GetNormal(const Vec &point); // получение нормали
 };
 
@@ -32,23 +32,23 @@ Flatness::Flatness(std::istream &is, Material material) {
 }
 
 // пересечение с лучём
-Primitive* Flatness::Intersect(const Ray &ray, double &t) {
+Primitive* Flatness::Intersect(const Ray &ray, double tmin, double tmax, double &t) {
     double denom = ray.direction.Dot(normal);
 
-    if (fabs(denom) < EPSILON){
-        t = INF;
+    if (fabs(denom) < EPSILON)
         return nullptr;
-    }
 
     t = (center - ray.origin).Dot(normal) / denom; // пересечение с плоскостью
+
+    if (t < tmin || t >= tmax)
+        return nullptr;
+
     Vec point = ray.GetPoint(t); // находим точку на плоскости
 
     Vec delta = point - center;
 
-    if (fabs(delta.x) > size.x + EPSILON || fabs(delta.y) > size.y + EPSILON || fabs(delta.z) > size.z + EPSILON){
-        t = INF;
+    if (fabs(delta.x) > size.x + EPSILON || fabs(delta.y) > size.y + EPSILON || fabs(delta.z) > size.z + EPSILON)
         return nullptr;
-    }
 
     return this;
 }

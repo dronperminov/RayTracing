@@ -9,8 +9,8 @@ class BoundingBox : public Primitive {
     Vec max;
 public:
     BoundingBox();
-    
-    Primitive* Intersect(const Ray &ray, double &t); // поиск пересечения
+
+    Primitive* Intersect(const Ray &ray, double tmin, double tmax, double &t); // поиск пересечения
     Vec GetNormal(const Vec &point); // нормаль
     Material GetMaterial(const Vec &point); // получение цвета в точке
 
@@ -24,74 +24,68 @@ BoundingBox::BoundingBox() {
 }
 
 // поиск пересечения
-Primitive* BoundingBox::Intersect(const Ray &ray, double &t) {
+Primitive* BoundingBox::Intersect(const Ray &ray, double tmin, double tmax, double &t) {
     double dx = ray.invDirection.x;
     double dy = ray.invDirection.y;
     double dz = ray.invDirection.z;
 
-    double tmin = (min.x - ray.origin.x) * dx;
-    double tmax = (max.x - ray.origin.x) * dx;
- 
-    if (tmin > tmax)
-        std::swap(tmin, tmax); 
- 
+    double t_min = (min.x - ray.origin.x) * dx;
+    double t_max = (max.x - ray.origin.x) * dx;
+
+    if (t_min > t_max)
+        std::swap(t_min, t_max);
+
     double tymin = (min.y - ray.origin.y) * dy;
     double tymax = (max.y - ray.origin.y) * dy;
 
     if (tymin > tymax)
-        std::swap(tymin, tymax); 
- 
-    if ((tmin > tymax) || (tymin > tmax)) {
-        t = INF;
+        std::swap(tymin, tymax);
+
+    if ((t_min > tymax) || (tymin > t_max))
         return nullptr;
-    }
- 
-    if (tymin > tmin) 
-        tmin = tymin; 
- 
-    if (tymax < tmax) 
-        tmax = tymax; 
+
+    if (tymin > t_min)
+        t_min = tymin;
+
+    if (tymax < t_max)
+        t_max = tymax;
 
     double tzmin = (min.z - ray.origin.z) * dz;
     double tzmax = (max.z - ray.origin.z) * dz;
- 
-    if (tzmin > tzmax) 
-        std::swap(tzmin, tzmax); 
- 
-    if ((tmin > tzmax) || (tzmin > tmax)) {
-        t = INF;
+
+    if (tzmin > tzmax)
+        std::swap(tzmin, tzmax);
+
+    if ((t_min > tzmax) || (tzmin > t_max))
         return nullptr;
-    }
- 
-    if (tzmin > tmin) 
-        tmin = tzmin; 
- 
-    if (tzmax < tmax) 
-        tmax = tzmax;
 
-    t = tmin;
+    if (tzmin > t_min)
+        t_min = tzmin;
 
-    if (tmin < EPSILON)
-        t = tmax;
+    if (tzmax < t_max)
+        t_max = tzmax;
 
-    if (t < EPSILON) {
-        t = INF;
+    t = t_min;
+
+    if (t_min < tmin)
+        t = t_max;
+
+    if (t < tmin || t >= tmax)
         return nullptr;
-    }
 
     t = tmax;
     Primitive *nearest = nullptr;
 
     for (size_t i = 0; i < primitives.size(); i++) {
         double ti;
-        Primitive *pi = primitives[i]->Intersect(ray, ti);
+        Primitive *pi = primitives[i]->Intersect(ray, tmin, tmax, ti);
 
         if (pi && ti < t) {
             t = ti; // обновляем ближайшее расстоние
             nearest = pi;
         }
     }
-    
+
     return nearest;
 }
 

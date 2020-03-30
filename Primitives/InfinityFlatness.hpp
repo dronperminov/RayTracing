@@ -12,7 +12,7 @@ protected:
 public:
     InfinityFlatness(std::istream &is, Material material); // конструктор из потока
 
-    Primitive* Intersect(const Ray &ray, double &t); // пересечение с лучём
+    Primitive* Intersect(const Ray &ray, double tmin, double tmax, double &t); // пересечение с лучём
     Vec GetNormal(const Vec &point); // получение нормали
 };
 
@@ -24,15 +24,17 @@ InfinityFlatness::InfinityFlatness(std::istream &is, Material material) {
 }
 
 // пересечение с лучём
-Primitive* InfinityFlatness::Intersect(const Ray &ray, double &t) {
+Primitive* InfinityFlatness::Intersect(const Ray &ray, double tmin, double tmax, double &t) {
     double denom = ray.direction.Dot(normal);
 
-    if (fabs(denom) < EPSILON){
-        t = INF;
+    if (fabs(denom) < EPSILON)
         return nullptr;
-    }
 
     t = -(bias + ray.origin.Dot(normal)) / denom;
+
+    if (t < tmin || t >= tmax)
+        return nullptr;
+
     return this;
 }
 

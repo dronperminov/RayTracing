@@ -13,7 +13,7 @@ protected:
 public:
     Disk(std::istream &is, Material material); // конструктор из потока
 
-    Primitive* Intersect(const Ray &ray, double &t); // пересечение с лучём
+    Primitive* Intersect(const Ray &ray, double tmin, double tmax, double &t); // пересечение с лучём
     Vec GetNormal(const Vec &point); // получение нормали
 };
 
@@ -25,7 +25,7 @@ Disk::Disk(std::istream &is, Material material) {
 }
 
 // пересечение с лучём
-Primitive* Disk::Intersect(const Ray &ray, double &t) {
+Primitive* Disk::Intersect(const Ray &ray, double tmin, double tmax, double &t) {
     double denom = ray.direction.Dot(normal);
 
     if (fabs(denom) < EPSILON) {
@@ -34,12 +34,14 @@ Primitive* Disk::Intersect(const Ray &ray, double &t) {
     }
 
     t = (center - ray.origin).Dot(normal) / denom;
+
+    if (t < tmin || t >= tmax)
+        return nullptr;
+
     Vec point = ray.GetPoint(t);
 
-    if ((point - center).Norm() > radius) {
-        t = INF;
+    if ((point - center).Norm() > radius)
         return nullptr;
-    }
 
     return this;
 }

@@ -37,9 +37,9 @@ Primitive* Scene::FindIntersection(const Ray &ray, double tmin, double tmax, dou
     // проходимся по всем фигурам
     for (Primitive* primitive : primitives) {
         double ti;
-        Primitive *pi = primitive->Intersect(ray, ti);
+        Primitive *pi = primitive->Intersect(ray, tmin, tmax, ti);
 
-        if (pi && ti >= tmin && ti < tmax && ti < t) {
+        if (pi && ti < t) {
             t = ti; // обновляем ближайшее расстоние
             closest = pi; // и запоминаем ближайший примитив
         }
@@ -52,7 +52,7 @@ Primitive* Scene::FindIntersection(const Ray &ray, double tmin, double tmax, dou
 bool Scene::HaveIntersection(const Ray &ray, double tmin, double tmax) const {
     double t;
     for (Primitive* primitive : primitives)
-        if (primitive->Intersect(ray, t) && t >= tmin && t < tmax)
+        if (primitive->Intersect(ray, tmin, tmax, t))
             return true;
 
     return false;

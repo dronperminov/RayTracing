@@ -9,7 +9,7 @@ class RayMarching : public Primitive {
 public:
     RayMarching(Material material); // конструктор из потока
 
-    Primitive* Intersect(const Ray &ray, double &t); // пересечение с лучём
+    Primitive* Intersect(const Ray &ray, double tmin, double tmax, double &t); // пересечение с лучём
     Vec GetNormal(const Vec &point); // получение нормали
 
     virtual double DE(const Vec &pos) = 0;
@@ -21,19 +21,18 @@ RayMarching::RayMarching(Material material) {
 }
 
 // пересечение с лучём
-Primitive* RayMarching::Intersect(const Ray &ray, double &t) {
+Primitive* RayMarching::Intersect(const Ray &ray, double tmin, double tmax, double &t) {
     t = 0;
     
     for (int steps = 0; steps < MAX_RAY_STEPS; steps++) {
         double distance = DE(ray.GetPoint(t));
         
         if (distance < EPSILON)
-            return this;
+            return t >= tmin && t < tmax ? this : nullptr;
 
         t += distance;
     }
 
-    t = INF;
     return nullptr;
 }
 

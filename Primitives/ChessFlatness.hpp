@@ -12,7 +12,7 @@ class ChessFlatness : public Primitive {
 public:
     ChessFlatness(std::istream &is, Material material, Material material2); // конструктор из потока
 
-    Primitive* Intersect(const Ray &ray, double &t); // пересечение с лучём
+    Primitive* Intersect(const Ray &ray, double tmin, double tmax, double &t); // пересечение с лучём
     Vec GetNormal(const Vec &point); // получение нормали
     Material GetMaterial(const Vec& point); // получение цвета в точке
 };
@@ -36,7 +36,7 @@ ChessFlatness::ChessFlatness(std::istream &is, Material material, Material mater
 }
 
 // пересечение с лучём
-Primitive* ChessFlatness::Intersect(const Ray &ray, double &t) {
+Primitive* ChessFlatness::Intersect(const Ray &ray, double tmin, double tmax, double &t) {
     double denom = ray.direction.Dot(normal);
 
     if (fabs(denom) < EPSILON){
@@ -45,14 +45,16 @@ Primitive* ChessFlatness::Intersect(const Ray &ray, double &t) {
     }
 
     t = (center - ray.origin).Dot(normal) / denom; // пересечение с плоскостью
+
+    if (t < tmin || t >= tmax)
+        return nullptr;
+
     Vec point = ray.GetPoint(t); // находим точку на плоскости
 
     Vec delta = point - center;
 
-    if (fabs(delta.x) > size.x + EPSILON || fabs(delta.y) > size.y + EPSILON || fabs(delta.z) > size.z + EPSILON){
-        t = INF;
+    if (fabs(delta.x) > size.x + EPSILON || fabs(delta.y) > size.y + EPSILON || fabs(delta.z) > size.z + EPSILON)
         return nullptr;
-    }
 
     return this;
 }

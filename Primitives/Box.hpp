@@ -9,7 +9,7 @@ class Box : public Primitive {
     Vec max;
 public:
     Box(std::istream& is, Material material); // конструктор из потока
-    Primitive* Intersect(const Ray &ray, double &t); // пересечение с лучем
+    Primitive* Intersect(const Ray &ray, double tmin, double tmax, double &t); // пересечение с лучем
     Vec GetNormal(const Vec& point); // получение нормали
 };
 
@@ -24,59 +24,54 @@ Box::Box(std::istream& is, Material material) {
 }
 
 // пересечение с лучем
-Primitive* Box::Intersect(const Ray &ray, double &t) {
+Primitive* Box::Intersect(const Ray &ray, double tmin, double tmax, double &t) {
     double dx = ray.invDirection.x;
     double dy = ray.invDirection.y;
     double dz = ray.invDirection.z;
 
-    double tmin = (min.x - ray.origin.x) * dx;
-    double tmax = (max.x - ray.origin.x) * dx;
- 
-    if (tmin > tmax)
-        std::swap(tmin, tmax); 
- 
+    double t_min = (min.x - ray.origin.x) * dx;
+    double t_max = (max.x - ray.origin.x) * dx;
+
+    if (t_min > t_max)
+        std::swap(t_min, t_max);
+
     double tymin = (min.y - ray.origin.y) * dy;
     double tymax = (max.y - ray.origin.y) * dy;
 
     if (tymin > tymax)
-        std::swap(tymin, tymax); 
- 
-    if ((tmin > tymax) || (tymin > tmax)) {
-        t = INF;
+        std::swap(tymin, tymax);
+
+    if ((t_min > tymax) || (tymin > t_max))
         return nullptr;
-    }
- 
-    if (tymin > tmin) 
-        tmin = tymin; 
- 
-    if (tymax < tmax) 
-        tmax = tymax; 
+
+    if (tymin > t_min)
+        t_min = tymin;
+
+    if (tymax < t_max)
+        t_max = tymax;
 
     double tzmin = (min.z - ray.origin.z) * dz;
     double tzmax = (max.z - ray.origin.z) * dz;
- 
-    if (tzmin > tzmax) 
-        std::swap(tzmin, tzmax); 
- 
-    if ((tmin > tzmax) || (tzmin > tmax)) {
-        t = INF;
-        return nullptr;
-    }
- 
-    if (tzmin > tmin) 
-        tmin = tzmin; 
- 
-    if (tzmax < tmax) 
-        tmax = tzmax;
 
-    t = tmin;
-    if (tmin < EPSILON)
-        t = tmax;
+    if (tzmin > tzmax)
+        std::swap(tzmin, tzmax);
 
-    if (t < EPSILON) {
-        t = INF;
+    if ((t_min > tzmax) || (tzmin > t_max))
         return nullptr;
-    }
+
+    if (tzmin > t_min)
+        t_min = tzmin;
+
+    if (tzmax < t_max)
+        t_max = tzmax;
+
+    t = t_min;
+
+    if (t_min < tmin)
+        t = t_max;
+
+    if (t < tmin || t >= tmax)
+        return nullptr;
 
     return this;
 }
